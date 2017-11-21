@@ -1,0 +1,112 @@
+.navbar-brand {
+	width: 167px;
+	height: 60px;
+	background: url(/img/logo.png) left center no-repeat;
+  background-color:#FFFFFF;
+	text-indent: -99999px;
+}
+.navbar-default {
+  background-color: #FFFFFF;
+  border: none;
+}
+
+.container {
+  max-width: 1920px;
+  width: 100%;
+}
+
+.gradient {
+   background-image: -webkit-gradient(
+   linear, left top, left bottom, from(rgba(0,0,0,0.5)),
+   to(rgba(0,0,0,0.0)));
+   color:white
+  }
+
+.row {
+  max-width: 1920px;
+  width: 100%;
+}
+
+.table-condensed  {
+  max-width: 1920px;
+  width: 100%;
+  font-size:12px;
+}
+
+.table-striped  {
+  max-width: 1920px;
+  width: 100%;
+  font-size:12px;
+}
+
+.table-striped>thead, .table-condensed>thead  {
+  font-size:14px;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td{
+  padding: 1px;
+}
+
+.thead-inverse th {
+  color: #fff;
+  background-color: #A9A9A9;
+}
+
+.dashboard-panel {
+  padding-left: 40px;
+  padding-top: 60px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height:300px;
+  max-width: 500px;
+  border: 0px;
+  font-size: 18px;
+  text-align: left;  
+  overflow: hidden;
+   
+  background-image: -webkit-gradient(
+    linear, left top, left bottom, from(rgba(0,0,0,0.5)),
+    to(rgba(0,0,0,0.1)));
+  }
+
+.dashboard-panel-center {
+  padding-top: 60px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height:300px;
+  max-width: 500px;
+  border: 0px;
+  font-size:34px;
+  text-align: center;  
+  #overflow: hidden;
+  #display: table-cell;
+ # vertical-align: middle;
+#justify-content: center;
+  background-image: -webkit-gradient(
+    linear, left top, left bottom, from(rgba(0,0,0,0.5)),
+    to(rgba(0,0,0,0.1)));
+  }
+
+.dashboard-panel-hover {
+  padding-left: 40px;
+  padding-top: 60px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height:300px;
+  max-width: 500px;
+  border: 0px;
+  font-size: 18px;
+  text-align: left;  
+  overflow: hidden;
+   
+  background-image: -webkit-gradient(
+    linear, left top, left bottom, from(rgba(0,0,0,0.5)),
+    to(rgba(0,0,0,0.1)));
+  }
+
+.dashboard-panel-hover:hover {
+  background-image: -webkit-gradient(
+    linear, left top, left bottom, from(rgba(0,0,0,0.1)),
+    to(rgba(0,0,0,0.5)));
+  }
+}

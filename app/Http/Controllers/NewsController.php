@@ -1,0 +1,256 @@
+<?php
+/**
+ * PHP version 7.1
+ *
+ * @category Controller
+ * @package  App
+ * @author   Predrag Vlajkovic <predrag.vlajkovic@gmail.com>
+ * @license  http://softwarepieces.com/licence Private owned
+ * @link     http://softwarepieces.com/
+ */
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\News as News;
+use Illuminate\Support\Facades\Auth;
+use Session;
+use App\User;
+use App\Category;
+
+/**
+ * NewsController
+ *
+ * @category Controller
+ * @package  App
+ * @author   Predrag Vlajkovic drPreAG <predrag.vlajkovic@gmail.com>
+ * @license  http://softwarepieces.com/licence Private owned
+ * @link     http://softwarepieces.com/
+ */
+class NewsController extends Controller
+{
+    private $minAuthRead=6;
+    private $minAuthWrite=8;
+    private $paginator;
+
+    /**
+     * Constructor
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');        
+        $this->paginator = env('PAGINATOR', 20);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        if (Auth::user()->role < $this->minAuthRead) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $news = News::orderBy('id', 'desc')->paginate();
+
+        return view ('news.index')
+            ->with('news', $news);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $newzCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+
+        return view('news.create')
+            ->with('newzCategory', $newzCategory);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        // validate the data
+        $this->validate(
+            $request,
+            array(
+                'url'       => 'required|min:5|max:255',            
+                'title'     => 'required|min:5|max:128',
+                'imgurl'    => 'max:255',
+                'post'      => 'required|min:10|max:1023',
+                'category'  => 'required|integer|min:0'
+            )
+        );
+
+        // store new record
+        $newz = new News;
+        $newz->url = $request->url;
+        $newz->title = $request->title;
+        $newz->imgurl = $request->imgurl;
+        $newz->post = $request->post;
+        $newz->category = $request->category;        
+        $newz->active = true;
+        $newz->creator = Auth::user()->id;
+        
+        if ($newz->save()) {
+            Session::flash('success', 'Newz succefully updated.');
+            return redirect()->route('news.show', $newz->id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        if (Auth::user()->role < $this->minAuthRead) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $newz = News::findOrFail($id);
+
+        return view('news.show')->with('newz', $newz);        
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $newz = News::findOrFail($id);
+
+        if ($newz->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $collection = collect(
+            [
+                ['id'=>'0', 'name'=>'Inactive'],
+                ['id'=>'1', 'name'=>'Active']
+            ]);
+
+        $newzStatus = $collection->pluck('name');
+        $newzCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');        
+
+        return view('news.edit')
+            ->with('newz', $newz)
+            ->with('newzCategory', $newzCategory)
+            ->with('newzStatus', $newzStatus);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $newz = News::findOrFail($id);
+
+        if ($newz->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+        // validate the data
+        $this->validate(
+            $request,
+            array(
+                'url'       => 'required|min:5|max:255',            
+                'title'     => 'required|min:5|max:128',
+                'imgurl'    => 'max:255',
+                'post'      => 'required|min:10|max:1023',
+                'category'  => 'required|integer',
+                'active'    => 'required|integer|min:0|max:1'
+            )
+        );
+
+        // update record
+        $newz->exists = true;
+        $newz->url = $request->url;
+        $newz->title = $request->title;
+        $newz->imgurl = $request->imgurl;
+        $newz->post = $request->post;
+        $newz->active = $request->active;
+        $newz->category = $request->category;
+        
+        if ($newz->save()) {
+            Session::flash('success', 'Newz succefully updated.');
+            return redirect()->route('news.show', $id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $news = News::findOrFail($id);
+
+        if ($news->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this news.');
+            return redirect()->route('news.index');
+        }
+        $news->exists=true;
+        $news->active = false;
+
+        if ($news->save()) {
+            Session::flash('success', 'A News was sucessfully made inactive');
+            return redirect()->route('news.index');
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();
+        }
+    }    
+}
