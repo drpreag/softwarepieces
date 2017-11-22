@@ -13,6 +13,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\News;
+use App\Category;
 
 /**
  * PagesController
@@ -51,11 +52,19 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDashboard()
+    public function getDashboard(Request $request)
     {
-        $news = News::where('active', true)->orderBy('created_at', 'desc')->take(20)->get();
+        if (is_null($request->category)) {
+            $news = News::where('active', true)->orderBy('created_at', 'desc')->take(20)->get();
+        } else {
+            $news = News::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->take(20)->get();
+        }
+
+        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+
         return view('pages.dashboard')
-                ->with('news', $news);
+                ->with('news', $news)
+                ->with('newsCategory', $newsCategory);
     }
 
     /**

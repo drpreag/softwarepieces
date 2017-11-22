@@ -1,6 +1,19 @@
 @extends('partials._main')
 
 @section('content')
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">        
+            {!! Form::open(['url' => '/dashboard', 'id'=>'form', 'method' => 'GET']) !!}
+            <div class="input-group add-on">
+                {{ Form::select('category', $newsCategory, null, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
+
+            </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+    <br>
     <div class="gtco-container">
         @foreach ($news as $newz)
             <div>
@@ -32,4 +45,13 @@
             <hr>
         @endforeach
     </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+function submitform()
+{
+  this.form.submit();
+}
+</script>
 @endsection
