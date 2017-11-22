@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User as User;
 use App\Role as Role;
+use App\News as News;
 use Session;
 
 /**
@@ -142,7 +143,11 @@ class UsersController extends Controller
 
         $user = User::findOrFail($id);
 
-        return view('users.show')->with('user', $user);
+        $news = News::where('creator', $id)->orderBy('id', 'desc')->get();
+
+        return view('users.show')
+            ->with('user', $user)
+            ->with('news', $news);
     }
 
     /**
