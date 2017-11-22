@@ -35,7 +35,9 @@
                                 Category: <b>{{ $newz->newsCategory->name }}</b>
                             </div>
                         @endif
-                        <div>Creator: <b>{{ $newz->isCreator->name }}</b></div>
+                        <div>Creator: 
+                            <a href="{{ route('users.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a>
+                        </div>
                         <div>
                             Created: <b>{{ substr($newz->created_at,0,10) }}</b>
                         </div>  

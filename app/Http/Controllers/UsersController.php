@@ -236,7 +236,12 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         if (Role::where('creator',$id)->count()>0) {
-            Session::flash('error', 'This user can not be deleted, because there are other items related to this user.');
+            Session::flash('error', 'This user can not be deleted, because there Categories related to this user.');
+            return redirect()->back();           
+        }
+
+        if (News::where('creator',$id)->count()>0) {
+            Session::flash('error', 'This user can not be deleted, because there are News related to this user.');
             return redirect()->back();           
         }
 

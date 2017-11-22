@@ -60,7 +60,8 @@
 				<dd>{{ $user->updated_at }}</dd>
 			</dl>
 		</div>
-
+	</div>
+	<div>
 	    <div role="tabpanel" class="container">
 	        <!-- Nav tabs -->
 	        <ul class="nav nav-tabs" role="tablist">
