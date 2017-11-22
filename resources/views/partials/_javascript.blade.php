@@ -7,6 +7,7 @@
 <!-- Main -->
 <script src="/oxygen/js/main.js"></script>
 
+<!--- Bootstrap -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -24,5 +25,5 @@
 <script src="/oxygen/js/modernizr-2.6.2.min.js"></script>
 <!-- FOR IE9 below -->
 <!--[if lt IE 9]>
-<script src="oxygen/js/respond.min.js"></script>
+<script src="/oxygen/js/respond.min.js"></script>
 <![endif]-->

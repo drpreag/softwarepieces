@@ -7,12 +7,12 @@
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-{{ Html::style('css/styles.css') }}
+{{ Html::style('/css/styles.css') }}
 
 @yield('stylesheets')
 
 
-<link rel="icon" href="{!! asset('img/favicon.ico') !!}"/>
+<link rel="icon" href="{!! asset('/img/favicon.ico') !!}"/>
 
 <!-- Oxygen -->
 <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>

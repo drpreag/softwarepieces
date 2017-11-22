@@ -3,15 +3,7 @@
 @section('title', '| Edit News')
 
 @section('stylesheets')
-	{!! Html::style('css/select2.min.css') !!}
-	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			plugins: 'link code',
-			menubar: false
-		});
-	</script>
+	{!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css') !!}
 @endsection
 
 @section('content')
@@ -68,5 +60,14 @@
 @endsection
 
 @section('scripts')
-	{!! Html::script('js/parsley.min.js') !!}
+	<script src="/js/parsley.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/en.js"></script>	
+	<script src="/js/tinymce/tinymce.min.js"></script>
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			plugins: 'link code',
+			menubar: false
+		});
+	</script>
 @endsection

@@ -3,19 +3,7 @@
 @section('title', '| Delete News')
 
 @section('stylesheets')
-
-	{!! Html::style('css/select2.min.css') !!}
-
-	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			plugins: 'link code',
-			menubar: false
-		});
-	</script>
-
+	{!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css') !!}
 @endsection
 
 @section('content')
@@ -79,4 +67,8 @@
 		</div>
 		{!! Form::close() !!}
 	</div>	<!-- end of .row (form) -->
+@endsection
+
+@section('scripts')
+	<script src="/js/parsley.min.js"></script>
 @endsection

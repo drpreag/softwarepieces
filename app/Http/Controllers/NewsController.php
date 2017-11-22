@@ -55,7 +55,7 @@ class NewsController extends Controller
             return redirect()->back();
         }
 
-        $news = News::orderBy('id', 'desc')->paginate();
+        $news = News::orderBy('id', 'desc')->paginate($this->paginator);
 
         return view ('news.index')
             ->with('news', $news);
