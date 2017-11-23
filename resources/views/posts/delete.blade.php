@@ -1,22 +1,6 @@
-@extends('main')
+@extends('partials._main')
 
 @section('title', '| Delete Post')
-
-@section('stylesheets')
-
-	{!! Html::style('css/select2.min.css') !!}
-
-	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			plugins: 'link code',
-			menubar: false
-		});
-	</script>
-
-@endsection
 
 @section('content')
 
@@ -65,10 +49,10 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				{!! Html::linkRoute('posts.index', 'Cancel', array(), array('class' => 'btn btn-danger btn-block')) !!}
+				{!! Html::linkRoute('posts.index', 'Cancel', array(), array('class' => 'btn btn-danger btn-sm')) !!}
 			</div>
 			<div class="col-sm-6">
-				{{ Form::submit('Delete Post', ['class' => 'btn btn-success btn-block']) }}
+				{{ Form::submit('Delete Post', ['class' => 'btn btn-success btn-sm']) }}
 			</div>
 		</div>
 		{!! Form::close() !!}

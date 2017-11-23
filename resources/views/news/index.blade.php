@@ -15,7 +15,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="container">
 		<table class="table-condensed table-striped table-hover">
 			<thead class="thead-inverse">
 				<th class="text-right">#&nbsp</th>

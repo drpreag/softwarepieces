@@ -1,70 +1,61 @@
-@extends('main')
+@extends('partials._main')
 
 @section('title', '| All Posts')
 
 @section('content')
 
 	<div class="row">
-		<div class="col-md-10">
-			<h1>All Posts</h1>
+		<div class="col-md-8">
+			<h3>All Posts</h3>
 		</div>
-
-		<div class="col-md-2">
+		<div class="col-md-4" align="right">
 			@if (Auth::check())
-				<a href="{{ route('posts.create') }}" class="btn btn-lg btn-block btn-primary btn-h1-spacing">Create New Post</a>
+				<a href="{{ route('posts.create') }}" class="btn btn-success btn-xs">Create New Post</a>
 			@endif
-		</div>
-		<div class="col-md-12">
-			<hr>
 		</div>
 	</div> <!-- end of .row -->
 
-	<div class="row">
-		<div class="col-md-12">
-			<table class="table">
-				<thead>
-					<th>#</th>
-					<th>Title</th>
-					<th>Active</th>
-					<th>Creator</th>					
-					<th>Created At</th>
-					<th></th>
-				</thead>
+	<div class="container">
+		<table class="table-condensed table-striped table-hover">
+			<thead class="thead-inverse">
+				<th class="text-right">#&nbsp</th>
+				<th>Title</th>
+				<th class="text-center">Active</th>
+				<th>Creator</th>					
+				<th>Created At</th>
+			</thead>
 
-				<tbody>
-					
-					@foreach ($posts as $post)
-						
-						<tr>
-							<th>{{ $post->id }}</th>
-							<td>{{ $post->title }}</td>
-							<td>
-								@if ( $post->active==1 )
-									Active
-								@else
-									Inactive
-								@endif
-							</td>							
-							<td>{{ $post->usercreator->name }}</td>							
-							<td>{{ date('M j, Y', strtotime($post->created_at)) }}</td>
-							<td>
-								<a href="{{ route('posts.show', $post->id) }}" class="btn btn-default btn-sm">View</a> 
-							    @if (Auth::check())									
-									<a href="{{ route('posts.edit', $post->id) }}" class="btn btn-default btn-sm">Edit</a>
-									<a href="{{ route('posts.delete', $post->id) }}" class="btn btn-default btn-sm">Delete</a>
-								@endif								
-							</td>
-						</tr>
+			<tbody>
+				@foreach ($posts as $post)
+					<tr class="table-tr" data-url="{{ route('posts.show', $post->id) }}">
+						<th>{{ $post->id }}</th>
+						<td>{{ $post->title }}</td>
+						<td align="center">
+							@if ( $posts->active==1 )
+								<button type="button" class="btn btn-xs btn-info">Active</button>
+							@else
+								<button type="button" class="btn btn-xs btn-danger">Inactive</button>
+							@endif
+						</td>							
+						<td>{{ $post->isCreator->name }}</td>							
+						<td>{{ $post->created_at }}</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
 
-					@endforeach
-
-				</tbody>
-			</table>
-
-			<div class="text-center">
-				{!! $posts->links(); !!}
-			</div>
+		<div class="text-center">
+			{{ $posts->links() }}
 		</div>
 	</div>
+@endsection
 
-@stop
+@section('scripts')
+<script type="text/javascript">
+$(function() {
+  $('table.table-condensed').on("click", "tr.table-tr", function() {
+    window.location = $(this).data("url");
+  });
+});
+</script>
+@endsection

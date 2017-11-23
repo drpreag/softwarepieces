@@ -1,4 +1,4 @@
-@extends('main')
+@extends('partials._main')
 
 @section('title', '| View Post')
 

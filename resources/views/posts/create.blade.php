@@ -1,21 +1,6 @@
-@extends('main')
+@extends('partials._main')
 
 @section('title', '| Create New Post')
-
-@section('stylesheets')
-
-	{!! Html::style('css/parsley.css') !!}
-	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			plugins: 'link code',
-			menubar: false
-		});
-	</script>
-
-@endsection
 
 @section('content')
 
@@ -46,9 +31,17 @@
 
 @endsection
 
+@section('stylesheets')
+	{!! Html::style('css/parsley.css') !!}
+@endsection
 
 @section('scripts')
-
-	{!! Html::script('js/parsley.min.js') !!}
-
+	<script src="/js/parsley.min.js"></script>
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			plugins: 'link code',
+			menubar: false
+		});
+	</script>
 @endsection

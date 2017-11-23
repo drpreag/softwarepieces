@@ -1,11 +1,46 @@
 <?php
-
+/**
+ * PHP version 7.1
+ *
+ * @category Controller
+ * @package  App
+ * @author   Predrag Vlajkovic <predrag.vlajkovic@gmail.com>
+ * @license  http://softwarepieces.com/licence Private owned
+ * @link     http://softwarepieces.com/
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Post;
+use App\User;
 
+/**
+ * PostsController
+ *
+ * @category Controller
+ * @package  App
+ * @author   Predrag Vlajkovic drPreAG <predrag.vlajkovic@gmail.com>
+ * @license  http://softwarepieces.com/licence Private owned
+ * @link     http://softwarepieces.com/
+ */
 class PostsController extends Controller
 {
+    private $minAuthRead=2;
+    private $minAuthWrite=3;
+    private $paginator;
+
+    /**
+     * Constructor
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');        
+        $this->paginator = env('PAGINATOR', 20);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +48,15 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::user()->role < $this->minAuthRead) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $posts = Post::orderBy('id', 'desc')->paginate($this->paginator);
+
+        return view ('posts.index')
+            ->with('posts', $posts);
     }
 
     /**
