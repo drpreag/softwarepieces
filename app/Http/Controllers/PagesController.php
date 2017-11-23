@@ -26,6 +26,7 @@ use App\Category;
  */
 class PagesController extends Controller
 {
+    private $paginator;
 
     /**
      * Constructor
@@ -35,6 +36,7 @@ class PagesController extends Controller
     public function __construct()
     {
         //$this->middleware('auth');
+        $this->paginator = env('PAGINATOR', 20);         
     }
 
     /**
@@ -55,9 +57,9 @@ class PagesController extends Controller
     public function getDashboard(Request $request)
     {
         if (is_null($request->category)) {
-            $news = News::where('active', true)->orderBy('created_at', 'desc')->take(20)->get();
+            $news = News::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
         } else {
-            $news = News::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->take(20)->get();
+            $news = News::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
         }
 
         $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');

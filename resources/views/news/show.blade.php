@@ -10,7 +10,7 @@
 				<h3><b>{{ $newz->title }}</b></h3>		
 			</div>
 			<div class="col-md-4" align="right">
-				<a href="{{ route('news.index') }}" class="btn btn-info btn-xs">Back</a>
+				<a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
 				<a href="{{ route('news.edit', $newz->id) }}" class="btn btn-success btn-xs">Edit</a>
 				<a href="{{ route('news.delete', $newz->id) }}" class="btn btn-danger btn-xs">Delete</a>
 			</div>
@@ -33,7 +33,7 @@
 				<dl class="dl-horizontal">
 					<dt>ImgUrl:</dt>
 					<dd>{{ $newz->imgurl }}</dd>
-					<dd><img src="{{ $newz->imgurl }}" target="_blank" max-height="300px" max-width="500px"></dd>
+					<dd><img src="{{ $newz->imgurl }}" class="responsive-image" target="_blank" width="500px"></dd>
 				</dl>
 			@endif		
 			<dl class="dl-horizontal">

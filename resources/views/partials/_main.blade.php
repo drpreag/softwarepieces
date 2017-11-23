@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     @include('partials._head')
+    @include('partials._javascript') 
+    @yield('scripts')    
   </head>
   
   <body>
@@ -9,17 +11,14 @@
     @include('partials._nav')    
 
     <div class="container"> <!-- start of body .container --> 
+      
       @include('partials._messages')
 
       @yield('content')
 
-      @include('partials._footer')
-
     </div> <!-- end of body .container --> 
 
+      @include('partials._footer')
+
   </body>
-    @include('partials._javascript')
-
-    @yield('scripts')
-
 </html>

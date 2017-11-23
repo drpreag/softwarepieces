@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User as User;
 use App\Category as Category;
+use App\News;
 use Session;
 
 /**
@@ -126,8 +127,11 @@ class CategoriesController extends Controller
         }
 
         $category = Category::findOrFail($id);
+        $news = News::where('category',$id)->orderBy('id', 'desc')->get();
 
-        return view('categories.show')->with('category', $category);
+        return view('categories.show')
+            ->with('category', $category)
+            ->with('news', $news);
     }
 
     /**

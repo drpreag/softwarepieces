@@ -119,7 +119,11 @@ class RolesController extends Controller
         }
 
         $role = Role::findOrFail($id);
-        return view('roles.show')->with('role', $role);
+        $users = User::where('role',$id)->orderBy('name')->get();
+
+        return view('roles.show')
+            ->with('role', $role)
+            ->with('users', $users);
     }
 
     /**

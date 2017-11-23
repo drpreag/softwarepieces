@@ -46,6 +46,7 @@
             </div>
             <hr>
         @endforeach
+        {{ $news->links() }}    
     </div>
 @endsection
 

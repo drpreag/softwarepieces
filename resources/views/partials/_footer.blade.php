@@ -1,6 +1,6 @@
-            <br>
-            <br>
             <div align="center">
+                <br>
+                <br>
             	<p>
                     <small class="block">&copy; 2017 drPreAG</small> 
                     &nbsp

@@ -2,12 +2,8 @@
 
 @section('title', '| Create News')
 
-@section('stylesheets')
-	{!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css') !!}
-@endsection
-
 @section('content')
-	<div class="container">
+
 		<div class="row">
 			<div class="col-md-8">
 				<h3>Create Newz</h3>		
@@ -45,18 +41,19 @@
 				</div>
 			{!! Form::close() !!}
 		</div>
-	</div>
+
 @endsection
 
 @section('scripts')
-	<script src="/js/parsley.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/en.js"></script>
-	<script src="/js/tinymce/tinymce.min.js"></script>
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			plugins: 'link code',
-			menubar: false
-		});
-	</script>
+			<script src="/js/tinymce/tinymce.min.js"></script>
+			<script>
+				tinymce.init({ 
+				    selector: 'textarea',
+				    setup: function (editor) {
+				        editor.on('change', function (e) {
+				            editor.save();
+				        });
+				    }
+				});				
+			</script>
 @endsection

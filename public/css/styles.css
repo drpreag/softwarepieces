@@ -1447,3 +1447,7 @@ form label {
   color: #fff;
   background-color: #A9A9A9;
 }
+
+#responsive-image {  
+  width: 100%;  height: auto; 
+}

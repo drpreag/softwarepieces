@@ -10,7 +10,7 @@
 				<h3>User: <b>{{ $user->name }}</b></h3>		
 			</div>
 			<div class="col-md-4" align="right">
-				<a href="{{ route('users.index') }}" class="btn btn-info btn-xs">Back</a>				
+				<a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>				
 				<a href="{{ route('users.edit', $user->id) }}" class="btn btn-success btn-xs">Edit</a>
 				<a href="{{ route('users.delete', $user->id) }}" class="btn btn-danger btn-xs">Delete</a>				
 			</div>
