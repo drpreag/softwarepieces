@@ -20,6 +20,7 @@
 			<thead class="thead-inverse">
 				<th class="text-right">#&nbsp</th>
 				<th>Title</th>
+				<th>Body</th>				
 				<th class="text-center">Active</th>
 				<th>Creator</th>					
 				<th>Created At</th>
@@ -28,10 +29,11 @@
 			<tbody>
 				@foreach ($posts as $post)
 					<tr class="table-tr" data-url="{{ route('posts.show', $post->id) }}">
-						<th>{{ $post->id }}</th>
-						<td>{{ $post->title }}</td>
+						<th>{{ $post->id }}</th>	
+						<td>{{ substr($post->title, 0, 50) }}{{ strlen($post->title) > 50 ? "..." : "" }}</td>
+						<td>{{ substr(strip_tags($post->body), 0, 70) }}{{ strlen(strip_tags($post->body)) > 70 ? "..." : "" }}</td>
 						<td align="center">
-							@if ( $posts->active==1 )
+							@if ( $post->active==1 )
 								<button type="button" class="btn btn-xs btn-info">Active</button>
 							@else
 								<button type="button" class="btn btn-xs btn-danger">Inactive</button>

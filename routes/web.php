@@ -14,6 +14,8 @@
 // public pages
 Route::get('/', ['uses' => 'PagesController@getDashboard', 'as' => 'dashboard']);
 Route::get('dashboard', ['uses' => 'PagesController@getDashboard', 'as' => 'dashboard']);
+Route::get('newsdashboard', ['uses' => 'PagesController@getNews', 'as' => 'newsdashboard']);
+Route::get('postsdashboard', ['uses' => 'PagesController@getPosts', 'as' => 'postsdashboard']);
 Route::get('licence', ['uses' => 'PagesController@getLicence', 'as' => 'licence']);
 Route::get('user_error', ['uses' => 'PagesController@getUserError', 'as' => 'user_error']);
 

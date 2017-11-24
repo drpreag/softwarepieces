@@ -135,16 +135,22 @@ class ProfilesController extends Controller
                     $constraint->aspectRatio();
                 });
             $avatarImage->save($location);
-            //Image::make($avatar)->resize ($width, $height)->save($location);
         }
 
         $user = User::findOrFail($id);
         $user->exists = true;
         $user->name = $request->name;
-        $user->avatar = $filename;
-        $user->save();
+        if ($request->hasFile('avatar')) {        
+            $user->avatar = $filename;
+        }
 
-        return redirect()->route('profiles.show', $id);
+        if ($user->save()) {
+            Session::flash('success', 'New user added.');
+            return redirect()->route('profiles.show', id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
     }
 
     /**

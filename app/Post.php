@@ -25,7 +25,7 @@ class Post extends Model
 {
     public function inCategory()
     {
-    	return $this->belongsTo('App\Category', 'id', 'category');
+    	return $this->belongsTo('App\Category', 'category', 'id');
     }
 
 //    public function comments()

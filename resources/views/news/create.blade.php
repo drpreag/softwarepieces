@@ -28,7 +28,7 @@
 				{{ Form::textarea('post', null, array('class' => 'form-control', 'required' => 'required', 'maxlength' => '1023')) }}
 
 				{{ Form::label('category', 'Category:') }}
-				{{ Form::select('category', $newzCategory, 1, array('class' => 'form-control', 'required' => 'required')) }}
+				{{ Form::select('category', $newzCategory, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
 
 				<br>
 				<div class="row">

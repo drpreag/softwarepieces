@@ -4,44 +4,59 @@
 
 @section('content')
 
-	<div class="container">
-		<h1>Create a Post</h1>
-		<hr>
+		<div class="row">
+			<div class="col-md-8">
+				<h3>Create a Blog post</h3>		
+			</div>
+			<div class="col-md-4" align="right">
+			</div>
+		</div>
+	
 		<div class="well">		
 			{!! Form::open(array('route' => 'posts.store', 'data-parsley-validate' => '', 'files' => true)) !!}
-			{{ csrf_field() }}
+				{{ csrf_field() }}
 
-			{{ Form::label('title', 'Title:') }}
-			{{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}
+				{{ Form::label('title', 'Title:') }}
+				{{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}
 
-			{{ Form::label('category_id', 'Category:') }}
-			{{ Form::select('category_id', $postCategories, null, ['class' => 'form-control']) }}
+				{{ Form::label('category', 'Category:') }}
+				{{ Form::select('category', $postCategories, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
 
-			{{ Form::label('featured_img', 'Upload a Featured Image') }}
-			{{ Form::file('featured_img') }}
+				{{ Form::label('image', 'Upload an Image:') }}
+				{{ Form::file('image') }}
 
-			{{ Form::label('body', "Post Body:") }}
-			{{ Form::textarea('body', null, array('class' => 'form-control')) }}
+				{{ Form::label('body', "Post Body:") }}
+				{{ Form::textarea('body', null, array('class' => 'form-control')) }}
 
-			{{ Form::submit('Create Post', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) }}
+				<br>
+				<div class="row">
+					<div class="col-sm-6" align="right">
+						<a class="btn btn-danger btn-sm" href="{{ URL::previous() }}">Cancel</a>
+					</div>
+					<div class="col-sm-6">
+						{{ Form::submit('Save Changes', ['class' => 'btn btn-success btn-sm']) }}
+					</div>
+				</div>
 
 			{!! Form::close() !!}
 		</div>
-	</div>
 
 @endsection
 
 @section('stylesheets')
-	{!! Html::style('css/parsley.css') !!}
+	{!! Html::style('/css/parsley.css') !!}
 @endsection
 
 @section('scripts')
-	<script src="/js/parsley.min.js"></script>
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			plugins: 'link code',
-			menubar: false
-		});
-	</script>
+			<script src="/js/tinymce/tinymce.min.js"></script>
+			<script>
+				tinymce.init({ 
+				    selector: 'textarea',
+				    setup: function (editor) {
+				        editor.on('change', function (e) {
+				            editor.save();
+				        });
+				    }
+				});				
+			</script>
 @endsection

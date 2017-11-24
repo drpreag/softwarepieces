@@ -5,21 +5,38 @@
 @section('content')
 
 	<div class="container">
-		<h1>{{ $post->title }}</h1>
-		<hr>
-		Created by: <b>{{ $post->usercreator->name }}</b> @ {{ $post->created_at }}; Last update @ {{ $post->updated_at }};  Category: <b>{{ $post->category->name }}</b> 
-		<hr>
-		<p class="lead">{!! $post->body !!}</p>
-		
-		<div>
-			{!! Html::linkRoute('posts.index', 'Back', array(), array('class' => 'btn btn-danger btn-block')) !!}
-		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<h3>Title: <b>{{ $post->title }}</b></h3>		
+			</div>
+			<div class="col-md-4" align="right">
+				<a href="{{ route('posts.index') }}" class="btn btn-info btn-xs">Back</a>
+				<a href="{{ route('posts.edit', $post->id) }}" class="btn btn-success btn-xs">Edit</a>
+				<a href="{{ route('posts.delete', $post->id) }}" class="btn btn-danger btn-xs">Delete</a>
+			</div>
+		</div>		
 
+		<div class="well">
+			<div>
+				{!! $post->body !!}
+			</div>
+			<div>
+	        	@if (! empty($post->image))
+	                <img src="{{ asset('images/' . $post->image) }}" max-height="600px" max-width="600px">
+            	@endif
+            </div>
+			<div>
+				Category: <b>{{ $post->inCategory->name }}</b>
+				<br>
+				Created by: <b>{{ $post->isCreator->name }}</b> @ {{ $post->created_at }}; Last update @ {{ $post->updated_at }}</b>
+			</div>            
+		</div>
+		@if (1>2)
 		<div id="backend-comments" style="margin-top: 50px;">
 			<h3>Comments <small>{{ $post->comments()->count() }} total</small></h3>
 
-			<table class="table">
-				<thead>
+			<table class="table-condensed table-striped table-hover">
+				<thead class="thead-inverse">
 					<tr>
 						<th>Name</th>
 						<th>Email</th>
@@ -43,6 +60,7 @@
 				</tbody>
 			</table>
 		</div>
+		@endif
 	</div>
 
 @endsection

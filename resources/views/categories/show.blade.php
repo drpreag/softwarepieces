@@ -55,14 +55,14 @@
 
 		<div>
 			@if ($news->count())
+				<h3>News:</h3>
 				<table class="table-condensed table-striped table-hover">
 					<thead class="thead-inverse">
 						<th class="text-right">#&nbsp</th>
 						<th>Title</th>
 						<th>Body</th>
 						<th class="text-center">Active</th>				
-						<th>Creator</th>
-						<th>Category</th>					
+						<th>Creator</th>					
 						<th>Created at</th>
 						<th>Updated at</th>				
 					</thead>
@@ -81,7 +81,6 @@
 									@endif
 								</td>
 								<td>{{ $newz->isCreator->name }}</td>
-								<td>{{ substr(strip_tags($newz->newsCategory->name), 0, 30) }}{{ strlen(strip_tags($newz->newsCategory->name)) > 30 ? "..." : "" }}</td>
 								<td>{{ $newz->created_at }}</td>
 								<td>{{ $newz->updated_at }}</td>
 							</tr>

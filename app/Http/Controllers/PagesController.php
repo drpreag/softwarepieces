@@ -13,6 +13,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\News;
+use App\Post;
 use App\Category;
 
 /**
@@ -67,6 +68,46 @@ class PagesController extends Controller
         return view('pages.dashboard')
                 ->with('news', $news)
                 ->with('newsCategory', $newsCategory);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getNews(Request $request)
+    {
+        if (is_null($request->category)) {
+            $news = News::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
+        } else {
+            $news = News::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
+        }
+
+        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+
+        return view('pages.news')
+                ->with('news', $news)
+                ->with('newsCategory', $newsCategory);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPosts(Request $request)
+    {
+        if (is_null($request->category)) {
+            $posts = Post::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
+        } else {
+            $posts = Post::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
+        }
+
+        $postsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+
+        return view('pages.posts')
+                ->with('posts', $posts)
+                ->with('postsCategory', $postsCategory);
     }
 
     /**

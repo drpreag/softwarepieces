@@ -14,6 +14,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\User;
+use App\Category;
+use Purifier;
+use Session;
+use Image;
 
 /**
  * PostsController
@@ -66,7 +70,15 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $postCategories = Category::where('active',1)->orderBy('name')->pluck('name','id');
+
+        return view('posts.create')
+            ->with('postCategories',$postCategories);
     }
 
     /**
@@ -77,7 +89,56 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+        
+        // validate the data
+        $this->validate($request, array(
+            'title'         => 'required|max:255',
+            'category'      => 'required|integer',
+            'body'          => 'required',
+            'image'         => 'max:255'
+        ));
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $postImage = Image::make($image);
+
+            $filename = time(). '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/') . $filename;
+            // max 600x600px for image
+            if ($postImage->width() > 600) 
+                $postImage->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            if ($postImage->height() > 600) 
+                $postImage->resize(null, 600, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            $postImage->save($location);
+        }        
+
+        // store in the database
+        $post = new Post;
+
+        $post->title = $request->title;
+        $post->body = Purifier::clean($request->body);
+        $post->creator = Auth::user()->id;
+        $post->category = $request->category;
+        if ($request->hasFile('image')) {
+            $post->image = $filename;
+        }
+        $post->active = true;
+
+        if ($post->save()) {
+            Session::flash('success', 'The blog post was successfully saved!');
+            return redirect()->route('posts.show', $post->id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
     }
 
     /**
@@ -88,7 +149,14 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        if (Auth::user()->role < $this->minAuthRead) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $post = Post::find($id);
+        return view('posts.show')
+            ->with('post',$post);
     }
 
     /**
@@ -99,7 +167,18 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        if ($post->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $postCategories = Category::where('active',true)->orderBy('name')->pluck('name','id');
+
+        return view('posts.edit')
+            ->with('post', $post)
+            ->with('postCategories',$postCategories);
     }
 
     /**
@@ -111,7 +190,54 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->active = true;
+
+        if ($post->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        // validate the data
+        $this->validate($request, array(
+            'title'         => 'required|max:255',
+            'category'      => 'required|integer',
+            'body'          => 'required',
+            'image'         => 'max:255'
+        ));
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $postImage = Image::make($image);
+
+            $filename = time(). '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/') . $filename;
+            // max 600x600px for image
+            if ($postImage->width() > 600) 
+                $postImage->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            if ($postImage->height() > 600) 
+                $postImage->resize(null, 600, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            $postImage->save($location);
+            $post->image = $filename;
+        }        
+
+        // store in the database
+        $post->active = true;
+        $post->title = $request->title;
+        $post->body = Purifier::clean($request->body);
+        $post->category = $request->category;
+
+        if ($post->save()) {
+            Session::flash('success', 'The blog post was successfully saved!');
+            return redirect()->route('posts.show', $post->id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
     }
 
     /**

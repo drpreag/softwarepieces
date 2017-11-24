@@ -239,7 +239,8 @@ return [
         /*
          * Added by drPreAG
          */        
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class
     ],
 
 ];
