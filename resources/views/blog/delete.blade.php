@@ -7,7 +7,7 @@
 	<div class="container">
 		<h1>Delete Post</h1>
 		<hr>		
-		{{ Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'DELETE']) }}
+		{{ Form::open(['route' => ['blog.destroy', $post->id], 'method' => 'DELETE']) }}
 		{{ csrf_field() }}
 
 		<div class="well">
@@ -49,7 +49,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				{!! Html::linkRoute('posts.index', 'Cancel', array(), array('class' => 'btn btn-danger btn-sm')) !!}
+				{!! Html::linkRoute('blog.index', 'Cancel', array(), array('class' => 'btn btn-danger btn-sm')) !!}
 			</div>
 			<div class="col-sm-6">
 				{{ Form::submit('Delete Post', ['class' => 'btn btn-success btn-sm']) }}

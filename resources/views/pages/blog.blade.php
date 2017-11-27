@@ -5,9 +5,9 @@
         <div class="col-md-6">
         </div>
         <div class="col-md-6">        
-            {!! Form::open(['url' => '/dashboard', 'id'=>'form', 'method' => 'GET']) !!}
+            {!! Form::open(['url' => 'blogdashboard', 'id'=>'form', 'method' => 'GET']) !!}
             <div class="input-group add-on">
-                {{ Form::select('category', $postsCategory, null, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
+                {{ Form::select('category', $blogCategory, null, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
             </div>
             {!! Form::close() !!}
         </div>
@@ -16,7 +16,7 @@
     <div class="gtco-container">
         @foreach ($posts as $post)
             <div>
-                <a href="{{ route('posts.show', $post->id) }}" target="_blank">
+                <a href="{{ route('blog.show', $post->id) }}" target="_blank">
                     <div class="text-left gtco-heading">
                         <h3>
                             {{ $post->title }}

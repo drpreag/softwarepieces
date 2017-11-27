@@ -10,9 +10,9 @@
 				<h3>Title: <b>{{ $post->title }}</b></h3>		
 			</div>
 			<div class="col-md-4" align="right">
-				<a href="{{ route('posts.index') }}" class="btn btn-info btn-xs">Back</a>
-				<a href="{{ route('posts.edit', $post->id) }}" class="btn btn-success btn-xs">Edit</a>
-				<a href="{{ route('posts.delete', $post->id) }}" class="btn btn-danger btn-xs">Delete</a>
+				<a href="{{ route('blog.index') }}" class="btn btn-info btn-xs">Back</a>
+				<a href="{{ route('blog.edit', $post->id) }}" class="btn btn-success btn-xs">Edit</a>
+				<a href="{{ route('blog.delete', $post->id) }}" class="btn btn-danger btn-xs">Delete</a>
 			</div>
 		</div>		
 

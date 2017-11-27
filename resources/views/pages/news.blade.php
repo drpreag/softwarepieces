@@ -5,7 +5,7 @@
         <div class="col-md-6">
         </div>
         <div class="col-md-6">        
-            {!! Form::open(['url' => '/dashboard', 'id'=>'form', 'method' => 'GET']) !!}
+            {!! Form::open(['url' => 'newsdashboard', 'id'=>'form', 'method' => 'GET']) !!}
             <div class="input-group add-on">
                 {{ Form::select('category', $newsCategory, null, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
             </div>

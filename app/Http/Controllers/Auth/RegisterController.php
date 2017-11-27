@@ -6,6 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Mail\NewUserNotice;
+use App\Mail\NewUserWelcome;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -62,10 +65,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        //return User::create([
+        //    'name' => $data['name'],
+        //    'email' => $data['email'],
+        //    'password' => bcrypt($data['password']),
+        //]);
+
+        $user = User::create(
+            [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]
+        );
+        $administrators = User::where('role', '>', 7)->get();
+        
+        foreach ($administrators as $admin) {
+            Mail::to($admin->email)->send(new NewUserNotice($user));
+        }
+
+        Mail::to($user->email)->send(new NewUserWelcome($user));
+        return $user;         
     }
 }

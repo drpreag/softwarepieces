@@ -21,8 +21,10 @@ use Illuminate\Database\Eloquent\Model;
  * @license  http://softwarepieces.com/licence Private owned
  * @link     http://softwarepieces.com/
  */
-class Post extends Model
+class Blog extends Model
 {
+    protected $table = "posts";
+
     public function inCategory()
     {
     	return $this->belongsTo('App\Category', 'category', 'id');

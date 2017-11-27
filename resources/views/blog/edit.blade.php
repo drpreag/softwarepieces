@@ -5,14 +5,14 @@
 @section('content')
 	<div class="container">
 		<div class="well">
-			{!! Form::model($post, ['route' => ['posts.update', $post->id], 'files' => true, 'method' => 'PUT']) !!}
+			{!! Form::model($post, ['route' => ['blog.update', $post->id], 'files' => true, 'method' => 'PUT']) !!}
 				{{ csrf_field() }}
 
 				{{ Form::label('title', 'Title:') }}
 				{{ Form::text('title', null, ["class" => 'form-control input-lg']) }}
 
 				{{ Form::label('category', 'Category:') }}
-				{{ Form::select('category', $postCategories, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
+				{{ Form::select('category', $blogCategories, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
 				
 				{{ Form::label('body', "Body:", ['class' => 'form-spacing-top']) }}
 				{{ Form::textarea('body', null, ['class' => 'form-control']) }}
@@ -34,7 +34,7 @@
 
 				<div class="row">
 					<div class="col-sm-6" align="right">
-						{!! Html::linkRoute('posts.index', 'Cancel', array(), array('class' => 'btn btn-danger btn-sm')) !!}
+						{!! Html::linkRoute('blog.index', 'Cancel', array(), array('class' => 'btn btn-danger btn-sm')) !!}
 					</div>
 					<div class="col-sm-6">
 						{{ Form::submit('Save Changes', ['class' => 'btn btn-success btn-sm']) }}

@@ -12,7 +12,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Post;
+use App\Blog;
 use App\User;
 use App\Category;
 use Purifier;
@@ -20,7 +20,7 @@ use Session;
 use Image;
 
 /**
- * PostsController
+ * BlogController
  *
  * @category Controller
  * @package  App
@@ -28,7 +28,7 @@ use Image;
  * @license  http://softwarepieces.com/licence Private owned
  * @link     http://softwarepieces.com/
  */
-class PostsController extends Controller
+class BlogController extends Controller
 {
     private $minAuthRead=2;
     private $minAuthWrite=3;
@@ -57,9 +57,9 @@ class PostsController extends Controller
             return redirect()->back();
         }
 
-        $posts = Post::orderBy('id', 'desc')->paginate($this->paginator);
+        $posts = Blog::orderBy('id', 'desc')->paginate($this->paginator);
 
-        return view ('posts.index')
+        return view ('blog.index')
             ->with('posts', $posts);
     }
 
@@ -75,10 +75,10 @@ class PostsController extends Controller
             return redirect()->back();
         }
 
-        $postCategories = Category::where('active',1)->orderBy('name')->pluck('name','id');
+        $blogCategories = Category::where('active',1)->orderBy('name')->pluck('name','id');
 
-        return view('posts.create')
-            ->with('postCategories',$postCategories);
+        return view('blog.create')
+            ->with('blogCategories',$blogCategories);
     }
 
     /**
@@ -104,37 +104,37 @@ class PostsController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $postImage = Image::make($image);
+            $blogImage = Image::make($image);
 
             $filename = time(). '.' . $image->getClientOriginalExtension();
             $location = public_path('images/') . $filename;
             // max 600x600px for image
-            if ($postImage->width() > 600) 
-                $postImage->resize(600, null, function ($constraint) {
+            if ($blogImage->width() > 600) 
+                $blogImage->resize(600, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-            if ($postImage->height() > 600) 
-                $postImage->resize(null, 600, function ($constraint) {
+            if ($blogImage->height() > 600) 
+                $blogImage->resize(null, 600, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-            $postImage->save($location);
+            $blogImage->save($location);
         }        
 
         // store in the database
-        $post = new Post;
+        $blog = new Blog;
 
-        $post->title = $request->title;
-        $post->body = Purifier::clean($request->body);
-        $post->creator = Auth::user()->id;
-        $post->category = $request->category;
+        $blog->title = $request->title;
+        $blog->body = Purifier::clean($request->body);
+        $blog->creator = Auth::user()->id;
+        $blog->category = $request->category;
         if ($request->hasFile('image')) {
-            $post->image = $filename;
+            $blog->image = $filename;
         }
-        $post->active = true;
+        $blog->active = true;
 
-        if ($post->save()) {
+        if ($blog->save()) {
             Session::flash('success', 'The blog post was successfully saved!');
-            return redirect()->route('posts.show', $post->id);
+            return redirect()->route('blog.show', $blog->id);
         } else {
             Session::flash('error', 'An error occured.');
             return redirect()->back();            
@@ -154,8 +154,9 @@ class PostsController extends Controller
             return redirect()->back();
         }
 
-        $post = Post::find($id);
-        return view('posts.show')
+        $post = Blog::findOrFail($id);
+        
+        return view('blog.show')
             ->with('post',$post);
     }
 
@@ -167,18 +168,18 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Blog::findOrFail($id);
 
         if ($post->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
             Session::flash('error', 'You do not have authorization for this action.');
             return redirect()->back();
         }
 
-        $postCategories = Category::where('active',true)->orderBy('name')->pluck('name','id');
+        $blogCategories = Category::where('active',true)->orderBy('name')->pluck('name','id');
 
-        return view('posts.edit')
+        return view('blog.edit')
             ->with('post', $post)
-            ->with('postCategories',$postCategories);
+            ->with('blogCategories',$blogCategories);
     }
 
     /**
@@ -190,7 +191,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::findOrFail($id);
+        $post = Blog::findOrFail($id);
         $post->active = true;
 
         if ($post->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
@@ -208,32 +209,31 @@ class PostsController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $postImage = Image::make($image);
+            $blogImage = Image::make($image);
 
             $filename = time(). '.' . $image->getClientOriginalExtension();
             $location = public_path('images/') . $filename;
             // max 600x600px for image
-            if ($postImage->width() > 600) 
-                $postImage->resize(600, null, function ($constraint) {
+            if ($blogImage->width() > 600) 
+                $blogImage->resize(600, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-            if ($postImage->height() > 600) 
-                $postImage->resize(null, 600, function ($constraint) {
+            if ($blogImage->height() > 600) 
+                $blogImage->resize(null, 600, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-            $postImage->save($location);
+            $blogImage->save($location);
             $post->image = $filename;
         }        
 
         // store in the database
-        $post->active = true;
         $post->title = $request->title;
         $post->body = Purifier::clean($request->body);
         $post->category = $request->category;
 
         if ($post->save()) {
             Session::flash('success', 'The blog post was successfully saved!');
-            return redirect()->route('posts.show', $post->id);
+            return redirect()->route('blog.show', $post->id);
         } else {
             Session::flash('error', 'An error occured.');
             return redirect()->back();            

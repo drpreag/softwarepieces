@@ -13,7 +13,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\News;
-use App\Post;
+use App\Blog;
 use App\Category;
 
 /**
@@ -95,19 +95,19 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getPosts(Request $request)
+    public function getBlog(Request $request)
     {
         if (is_null($request->category)) {
-            $posts = Post::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
+            $posts = Blog::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
         } else {
-            $posts = Post::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
+            $posts= Blog::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
         }
 
-        $postsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+        $blogCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
 
-        return view('pages.posts')
+        return view('pages.blog')
                 ->with('posts', $posts)
-                ->with('postsCategory', $postsCategory);
+                ->with('blogCategory', $blogCategory);
     }
 
     /**

@@ -13,14 +13,14 @@
 		</div>
 	
 		<div class="well">		
-			{!! Form::open(array('route' => 'posts.store', 'data-parsley-validate' => '', 'files' => true)) !!}
+			{!! Form::open(array('route' => 'blog.store', 'data-parsley-validate' => '', 'files' => true)) !!}
 				{{ csrf_field() }}
 
 				{{ Form::label('title', 'Title:') }}
 				{{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}
 
 				{{ Form::label('category', 'Category:') }}
-				{{ Form::select('category', $postCategories, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
+				{{ Form::select('category', $blogCategories, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
 
 				{{ Form::label('image', 'Upload an Image:') }}
 				{{ Form::file('image') }}

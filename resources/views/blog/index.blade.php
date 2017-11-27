@@ -10,7 +10,7 @@
 		</div>
 		<div class="col-md-4" align="right">
 			@if (Auth::check())
-				<a href="{{ route('posts.create') }}" class="btn btn-success btn-xs">Create New Post</a>
+				<a href="{{ route('blog.create') }}" class="btn btn-success btn-xs">Create New Post</a>
 			@endif
 		</div>
 	</div> <!-- end of .row -->
@@ -28,7 +28,7 @@
 
 			<tbody>
 				@foreach ($posts as $post)
-					<tr class="table-tr" data-url="{{ route('posts.show', $post->id) }}">
+					<tr class="table-tr" data-url="{{ route('blog.show', $post->id) }}">
 						<th>{{ $post->id }}</th>	
 						<td>{{ substr($post->title, 0, 50) }}{{ strlen($post->title) > 50 ? "..." : "" }}</td>
 						<td>{{ substr(strip_tags($post->body), 0, 70) }}{{ strlen(strip_tags($post->body)) > 70 ? "..." : "" }}</td>

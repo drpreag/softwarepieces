@@ -15,7 +15,7 @@
 Route::get('/', ['uses' => 'PagesController@getDashboard', 'as' => 'dashboard']);
 Route::get('dashboard', ['uses' => 'PagesController@getDashboard', 'as' => 'dashboard']);
 Route::get('newsdashboard', ['uses' => 'PagesController@getNews', 'as' => 'newsdashboard']);
-Route::get('postsdashboard', ['uses' => 'PagesController@getPosts', 'as' => 'postsdashboard']);
+Route::get('blogdashboard', ['uses' => 'PagesController@getBlog', 'as' => 'blogdashboard']);
 Route::get('licence', ['uses' => 'PagesController@getLicence', 'as' => 'licence']);
 Route::get('user_error', ['uses' => 'PagesController@getUserError', 'as' => 'user_error']);
 
@@ -36,8 +36,8 @@ Route::resource ('categories', 'CategoriesController' );
 Route::get ('news/{id}/delete', ['uses' => 'NewsController@delete', 'as' => 'news.delete']);
 Route::resource ('news', 'NewsController' );
 
-Route::get ('posts/{id}/delete', ['uses' => 'PostsController@delete', 'as' => 'posts.delete']);
-Route::resource ('posts', 'PostsController' );
+Route::get ('blog/{id}/delete', ['uses' => 'BlogController@delete', 'as' => 'blog.delete']);
+Route::resource ('blog', 'BlogController' );
 
 Route::resource ('profiles', 'ProfilesController' );
 
