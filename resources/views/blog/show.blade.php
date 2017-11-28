@@ -25,6 +25,18 @@
 	                <img src="{{ asset('images/' . $post->image) }}" max-height="600px" max-width="600px">
             	@endif
             </div>
+           	<br>            
+            <div>
+				Status:
+					@if ($post->active==1)
+						<button type="button" class="btn btn-xs btn-info">Active</button>
+					@else
+						<button type="button" class="btn btn-xs btn-danger">Inactive</button>
+					@endif
+            </div>
+            <div>
+            	Keywords: <b>{{ $post->keywords }}</b>
+            </div>
 			<div>
 				Category: <b>{{ $post->inCategory->name }}</b>
 				<br>

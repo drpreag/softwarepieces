@@ -26,7 +26,10 @@
 				{{ Form::file('image') }}
 
 				{{ Form::label('body', "Post Body:") }}
-				{{ Form::textarea('body', null, array('class' => 'form-control')) }}
+				{{ Form::textarea('body', null, array('class' => 'form-control', 'maxlength' => '255')) }}
+
+				{{ Form::label('keywords', 'Keywords: (coma delimited)') }}
+				{{ Form::text('keywords', null, ["class" => 'form-control']) }}
 
 				<br>
 				<div class="row">
@@ -52,6 +55,8 @@
 			<script>
 				tinymce.init({ 
 				    selector: 'textarea',
+				    plugins: 'link code',
+					menubar: true,
 				    setup: function (editor) {
 				        editor.on('change', function (e) {
 				            editor.save();

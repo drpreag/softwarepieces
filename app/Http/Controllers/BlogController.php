@@ -99,8 +99,11 @@ class BlogController extends Controller
             'title'         => 'required|max:255',
             'category'      => 'required|integer',
             'body'          => 'required',
-            'image'         => 'max:255'
+            'image'         => 'max:255',
+            'keywords'      => 'max:255'
         ));
+
+        $post = new Blog;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -118,23 +121,23 @@ class BlogController extends Controller
                     $constraint->aspectRatio();
                 });
             $blogImage->save($location);
+            $post->image = $filename;            
         }        
 
         // store in the database
-        $blog = new Blog;
-
-        $blog->title = $request->title;
-        $blog->body = Purifier::clean($request->body);
-        $blog->creator = Auth::user()->id;
-        $blog->category = $request->category;
+        $post->title = $request->title;
+        $post->body = Purifier::clean($request->body);
+        $post->creator = Auth::user()->id;
+        $post->category = $request->category;
+        $post->keywords = $request->keywords;
         if ($request->hasFile('image')) {
-            $blog->image = $filename;
-        }
-        $blog->active = true;
 
-        if ($blog->save()) {
+        }
+        $post->active = true;
+
+        if ($post->save()) {
             Session::flash('success', 'The blog post was successfully saved!');
-            return redirect()->route('blog.show', $blog->id);
+            return redirect()->route('blog.show', $post->id);
         } else {
             Session::flash('error', 'An error occured.');
             return redirect()->back();            
@@ -204,7 +207,8 @@ class BlogController extends Controller
             'title'         => 'required|max:255',
             'category'      => 'required|integer',
             'body'          => 'required',
-            'image'         => 'max:255'
+            'image'         => 'max:255',
+            'keywords'      => 'max:255'
         ));
 
         if ($request->hasFile('image')) {
@@ -230,6 +234,7 @@ class BlogController extends Controller
         $post->title = $request->title;
         $post->body = Purifier::clean($request->body);
         $post->category = $request->category;
+        $post->keywords = $request->keywords;
 
         if ($post->save()) {
             Session::flash('success', 'The blog post was successfully saved!');

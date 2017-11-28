@@ -14,7 +14,7 @@ body {
   font-family: "Work Sans", Arial, sans-serif;
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.5;
   color: #828282;
   background: #fff;
 }
@@ -480,6 +480,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 form label {
   font-weight: normal !important;
+  font : 16px;
 }
 
 #gtco-header .display-tc,
@@ -1368,9 +1369,9 @@ form label {
   box-shadow: none;
   background: transparent;
   border: 2px solid rgba(0, 0, 0, 0.1);
-  height: 54px;
-  font-size: 18px;
-  font-weight: 300;
+  height: 40px; 
+  font-size: 16px;
+  font-weight: 100;
 }
 .form-control:active, .form-control:focus {
   outline: none;

@@ -22,6 +22,7 @@
 				<th>Title</th>
 				<th>Body</th>				
 				<th class="text-center">Active</th>
+				<th>Keywords</th>
 				<th>Creator</th>					
 				<th>Created At</th>
 			</thead>
@@ -38,7 +39,8 @@
 							@else
 								<button type="button" class="btn btn-xs btn-danger">Inactive</button>
 							@endif
-						</td>							
+						</td>
+						<td>{{ substr($post->keywords, 0, 20) }}{{ strlen($post->keywords) > 20 ? "..." : "" }}</td>	
 						<td>{{ $post->isCreator->name }}</td>							
 						<td>{{ $post->created_at }}</td>
 					</tr>
