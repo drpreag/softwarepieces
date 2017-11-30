@@ -39,7 +39,9 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => [
+            'show_profile'
+        ]]);
         $this->paginator = env('PAGINATOR', 20);        
     }
 
@@ -253,4 +255,76 @@ class UsersController extends Controller
             return redirect()->back();           
         }
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_profile($id)
+    {
+        $user = User::findOrFail($id);
+
+        return view('users.show_profile')
+            ->with('user', $user);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_profile($id)
+    {
+        if (Auth::user()->id <> $id) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $user = User::findOrFail($id);
+
+        return view('users.edit_profile')
+            ->with('user', $user);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_profile(Request $request, $id)
+    {
+       // dd($request);
+        if (Auth::user()->id <> $id) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+        // validate the data
+        $this->validate(
+            $request,
+            array(
+                'name' => 'required|max:255',
+                'avatar'    => 'nullable|max:255'
+            )
+        );
+
+        // update record
+        $user = User::findOrFail($id);
+        $user->exists = true;
+        $user->name = $request->name;
+        $user->avatar = $request->avatar;
+        $user->description = $request->description;
+
+        if ($user->save()) {
+            Session::flash('success', 'Profile succefully updated.');
+            return redirect()->route('users.show_profile', $id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
+    }    
 }

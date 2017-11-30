@@ -41,7 +41,10 @@ class BlogController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');        
+        $this->middleware('auth', ['except' => [
+            'all', 'show_public'
+        ]]);
+
         $this->paginator = env('PAGINATOR', 20);
     }
 
@@ -97,10 +100,12 @@ class BlogController extends Controller
         // validate the data
         $this->validate($request, array(
             'title'         => 'required|max:255',
+            'subtitle'      => 'max:1024',
             'category'      => 'required|integer',
             'body'          => 'required',
             'image'         => 'max:255',
-            'keywords'      => 'max:255'
+            'keywords'      => 'max:127',
+            'slug'          => 'max:127'
         ));
 
         $post = new Blog;
@@ -126,13 +131,12 @@ class BlogController extends Controller
 
         // store in the database
         $post->title = $request->title;
+        $post->subtitle = $request->subtitle;
         $post->body = Purifier::clean($request->body);
         $post->creator = Auth::user()->id;
         $post->category = $request->category;
         $post->keywords = $request->keywords;
-        if ($request->hasFile('image')) {
-
-        }
+        $post->slug = $request->slug;
         $post->active = true;
 
         if ($post->save()) {
@@ -155,7 +159,7 @@ class BlogController extends Controller
         if (Auth::user()->role < $this->minAuthRead) {
             Session::flash('error', 'You do not have authorization for this action.');
             return redirect()->back();
-        }
+         }
 
         $post = Blog::findOrFail($id);
         
@@ -205,10 +209,12 @@ class BlogController extends Controller
         // validate the data
         $this->validate($request, array(
             'title'         => 'required|max:255',
+            'subtitle'      => 'max:1024',            
             'category'      => 'required|integer',
             'body'          => 'required',
             'image'         => 'max:255',
-            'keywords'      => 'max:255'
+            'keywords'      => 'max:127',
+            'slug'          => 'max:127'
         ));
 
         if ($request->hasFile('image')) {
@@ -232,10 +238,11 @@ class BlogController extends Controller
 
         // store in the database
         $post->title = $request->title;
+        $post->subtitle = $request->subtitle;
         $post->body = Purifier::clean($request->body);
         $post->category = $request->category;
         $post->keywords = $request->keywords;
-
+        $post->slug = $request->slug;
         if ($post->save()) {
             Session::flash('success', 'The blog post was successfully saved!');
             return redirect()->route('blog.show', $post->id);
@@ -254,5 +261,47 @@ class BlogController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Public routes
+     *
+     */
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Request $request)
+    {
+        $category = $request->category;
+
+        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+
+        if (is_null($category)) {   
+            $posts = Blog::where('active', true)->orderBy('id', 'desc')->paginate($this->paginator);
+        } else {
+           $posts = Blog::where('active', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
+        }
+
+        return view ('blog.all')
+            ->with('posts', $posts)
+            ->with('newsCategory', $newsCategory)
+            ->with('category', $category);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_public($id)
+    {
+        $post = Blog::findOrFail($id);
+        
+        return view('blog.show_public')
+            ->with('post',$post);
     }
 }

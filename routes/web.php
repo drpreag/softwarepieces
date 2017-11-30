@@ -29,14 +29,20 @@ Route::resource ('roles', 'RolesController' );
 
 Route::get ('users/{id}/delete', ['uses' => 'UsersController@delete', 'as' => 'users.delete']);
 Route::resource ('users', 'UsersController' );
+Route::get ('users/{id}/show_profile', ['uses' => 'UsersController@show_profile', 'as' => 'users.show_profile']);
+Route::get ('users/{id}/edit_profile', ['uses' => 'UsersController@edit_profile', 'as' => 'users.edit_profile']);
+Route::post ('users/{id}/update_profile', ['uses' => 'UsersController@update_profile', 'as' => 'users.update_profile']);
 
 Route::get ('categories/{id}/delete', ['uses' => 'CategoriesController@delete', 'as' => 'categories.delete']);
 Route::resource ('categories', 'CategoriesController' );
 
 Route::get ('news/{id}/delete', ['uses' => 'NewsController@delete', 'as' => 'news.delete']);
+Route::get ('news/all', ['uses' => 'NewsController@all', 'as' => 'news.all']);
 Route::resource ('news', 'NewsController' );
 
 Route::get ('blog/{id}/delete', ['uses' => 'BlogController@delete', 'as' => 'blog.delete']);
+Route::get ('blog/all', ['uses' => 'BlogController@all', 'as' => 'blog.all']);
+Route::get ('blog/{id}/show_public', ['uses' => 'BlogController@show_public', 'as' => 'blog.show_public']);
 Route::resource ('blog', 'BlogController' );
 
 Route::resource ('profiles', 'ProfilesController' );

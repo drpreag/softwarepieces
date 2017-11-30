@@ -23,7 +23,7 @@
 				{{ Form::text('imgurl', null, array('class' => 'form-control', 'maxlength' => '255')) }}
 
 				{{ Form::label('post', 'Post:') }}
-				{{ Form::textarea('post', null, array('class' => 'form-control', 'required' => 'required', 'maxlength' => '1023')) }}
+				{{ Form::textarea('post', null, array('class' => 'form-control', 'required' => 'required', 'maxlength' => '2048')) }}
 
 				{{ Form::label('category', 'Category:') }}
 				{{ Form::select('category', $newzCategory, null, ['class' => 'form-control']) }}

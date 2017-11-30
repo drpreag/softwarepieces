@@ -23,6 +23,7 @@ class Users extends Migration
             $table->boolean('active')->default(true);
             $table->integer('role')->unsigned()->default(1);
             $table->string('avatar',255)->nullable();
+            $table->text('description')->nullable();            
             $table->rememberToken();
             $table->timestamps();
         });

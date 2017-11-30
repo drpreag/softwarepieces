@@ -4,12 +4,10 @@
 
 @section('content')
 
-    <div class="gtco-container">
-        <div align="right">
-            <a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
-            <a href="{{ route('blog.edit', $post->id) }}" class="btn btn-success btn-xs">Edit</a>
-            <a href="{{ route('blog.delete', $post->id) }}" class="btn btn-danger btn-xs">Delete</a>                
-        </div>              
+	<div class="gtco-container">
+		<div align="right">
+				<a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
+		</div>				
 
         <div>
             <div class="row">
@@ -55,36 +53,36 @@
             </div>
         </div>  
     </div>
-	@if (1>2)
-	<div id="backend-comments" style="margin-top: 50px;">
-		<h3>Comments <small>{{ $post->comments()->count() }} total</small></h3>
+		@if (1>2)
+		<div id="backend-comments" style="margin-top: 50px;">
+			<h3>Comments <small>{{ $post->comments()->count() }} total</small></h3>
 
-		<table class="table-condensed table-striped table-hover">
-			<thead class="thead-inverse">
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Comment</th>
-					<th width="70px"></th>
-				</tr>
-			</thead>
+			<table class="table-condensed table-striped table-hover">
+				<thead class="thead-inverse">
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Comment</th>
+						<th width="70px"></th>
+					</tr>
+				</thead>
 
-			<tbody>
-				@foreach ($post->comments as $comment)
-				<tr>
-					<td>{{ $comment->name }}</td>
-					<td>{{ $comment->email }}</td>
-					<td>{{ $comment->comment }}</td>
-					<td>
-						<a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-						<a href="{{ route('comments.delete', $comment->id) }}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-					</td>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
+				<tbody>
+					@foreach ($post->comments as $comment)
+					<tr>
+						<td>{{ $comment->name }}</td>
+						<td>{{ $comment->email }}</td>
+						<td>{{ $comment->comment }}</td>
+						<td>
+							<a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a href="{{ route('comments.delete', $comment->id) }}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+		@endif
 	</div>
-	@endif
-
 
 @endsection

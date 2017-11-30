@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-md-6">
         </div>
-        <div class="col-md-6">        
-            {!! Form::open(['url' => 'newsdashboard', 'id'=>'form', 'method' => 'GET']) !!}
+        <div class="col-md-6" align="right">        
+            {!! Form::open(['url' => 'news/all', 'id'=>'form', 'method' => 'GET']) !!}
             <div class="input-group add-on">
-                {{ Form::select('category', $newsCategory, null, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
+                {{ Form::select('category', $newsCategory, $category, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
             </div>
             {!! Form::close() !!}
         </div>
@@ -35,7 +35,7 @@
                             </div>
                         @endif
                         <div>Creator: 
-                            <a href="{{ route('users.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a>
+                            <a href="{{ route('users.show_profile', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a>
                         </div>
                         <div>
                             Created: <b>{{ substr($newz->created_at,0,10) }}</b>

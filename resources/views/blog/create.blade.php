@@ -19,6 +19,9 @@
 				{{ Form::label('title', 'Title:') }}
 				{{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}
 
+				{{ Form::label('subtitle', 'Subtitle:') }}
+				{{ Form::text('subtitle', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '1024')) }}
+
 				{{ Form::label('category', 'Category:') }}
 				{{ Form::select('category', $blogCategories, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
 
@@ -30,6 +33,9 @@
 
 				{{ Form::label('keywords', 'Keywords: (coma delimited)') }}
 				{{ Form::text('keywords', null, ["class" => 'form-control']) }}
+
+				{{ Form::label('slug', 'Slug (unique)') }}
+				{{ Form::text('slug', null, ["class" => 'form-control']) }}
 
 				<br>
 				<div class="row">

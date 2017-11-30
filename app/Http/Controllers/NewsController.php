@@ -39,7 +39,10 @@ class NewsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');        
+        $this->middleware('auth', ['except' => [
+            'all'
+        ]]);
+
         $this->paginator = env('PAGINATOR', 20);
     }
 
@@ -99,7 +102,7 @@ class NewsController extends Controller
                 'url'       => 'required|min:5|max:255',            
                 'title'     => 'required|min:5|max:128',
                 'imgurl'    => 'max:255',
-                'post'      => 'required|min:10|max:1023',
+                'post'      => 'required|min:10|max:2048',
                 'category'  => 'required|integer|min:0'
             )
         );
@@ -193,7 +196,7 @@ class NewsController extends Controller
                 'url'       => 'required|min:5|max:255',            
                 'title'     => 'required|min:5|max:128',
                 'imgurl'    => 'max:255',
-                'post'      => 'required|min:10|max:1023',
+                'post'      => 'required|min:10|max:2048',
                 'category'  => 'required|integer',
                 'active'    => 'required|integer|min:0|max:1'
             )
@@ -252,5 +255,33 @@ class NewsController extends Controller
             Session::flash('error', 'An error occured.');
             return redirect()->back();
         }
+    }    
+
+    /**
+     * Public routes
+     *
+     */
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Request $request)
+    {
+        $category = $request->category;
+
+        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+
+        if (is_null($category)) {   
+            $news = News::where('active', true)->orderBy('id', 'desc')->paginate($this->paginator);
+        } else {
+            $news = News::where('active', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
+        }
+
+        return view ('news.all')
+            ->with('news', $news)
+            ->with('newsCategory', $newsCategory)
+            ->with('category', $category);
     }    
 }

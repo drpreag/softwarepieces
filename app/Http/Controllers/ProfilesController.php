@@ -65,10 +65,10 @@ class ProfilesController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->id <> $id) {
-            Session::flash('error', 'You do not have authorization for this action.');
-            return redirect()->back();
-        }
+        //if (Auth::user()->id <> $id) {
+        //    Session::flash('error', 'You do not have authorization for this action.');
+        //    return redirect()->back();
+        // }
 
         $user = User::findOrFail($id);
 
@@ -163,4 +163,6 @@ class ProfilesController extends Controller
     {
         //
     }
+
+    
 }

@@ -18,11 +18,14 @@ class Posts extends Migration
 
             $table->increments('id');
             $table->string('title')->length(128);
+            $table->string('subtitle')->length(1024)->nullable;
             $table->text('body');
             $table->integer('creator')->unsigned();         // FK to users table
             $table->integer('category')->unsigned();        // FK to categories table
             $table->boolean('active')->default(true); 
             $table->string('image')->nullable();
+            $table->string('keywords')->length(128)->nullable(); 
+            $table->string('slug')->length(128)->nullable(); 
             $table->timestamps();
         });
     }
