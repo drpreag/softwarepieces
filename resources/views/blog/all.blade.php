@@ -2,8 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
-        </div>
+        <div class="col-md-6"></div>
         <div class="col-md-6" align="right">        
             {!! Form::open(['url' => 'blog/all', 'id'=>'form', 'method' => 'GET']) !!}
             <div class="input-group add-on">
@@ -12,9 +11,11 @@
             {!! Form::close() !!}
         </div>
     </div>
+
     <br>
-    <div class="gtco-container">
-        @foreach ($posts as $post)
+    @foreach ($posts as $post)
+        <div class="gtco-container divider">
+
             <div>
                 <div class="row">
                     <div class="col-md-6">
@@ -24,41 +25,43 @@
                         Published: <b>{{ substr($post->created_at,0,10) }}</b>
                     </div>
                 </div>
+            </div>
+
+            <div class="post-body">
                 <br>
-                    <h3><b>{{ $post->title }}</b></h3>                  
-                <div>
+                <h3><b>{{ $post->title }}</b></h3>                  
+                @if (! empty($post->subtitle))
                     <hr>
                     <i>{{ $post->subtitle }}</i>
-                    <hr>
-                </div>
-                <div>
-                    <p>
-                        @if (! empty($post->image))
-                            <img src="{{ asset('images/' . $post->image) }}" target="_blank" height="240px" max-width="300px" align="right" float="right" hspace="20">
-                        @endif      
-                        {!! $post->body !!}
-                    </p>
-                </div>
-                <div class="well">
-                    <div class="row">
-                        <div class="col-md-8">
-                            Creator: 
-                            <a href="{{ route('users.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a>
-                            {!! $post->isCreator->description !!}
-                        </div>
-                        <div class="col-md-4" align="right">
-                            @if (! empty($post->isCreator->avatar))
-                                <img src="{{ asset('images/' . $post->isCreator->avatar) }}" target="_blank" max-height="300px" width="200px">
-                            @endif                                 
-                        </div>
-                    </div>
+                    <hr>                    
+                @endif
+                @if (! empty($post->image))
+                    <img src="{{ asset('images/' . $post->image) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" target="_blank" max-height="240px" max-width="300px" align="right">
+                @endif      
+                {!! $post->body !!}
+            </div>
+
+            <div class="row">        
+                <div class="well post-creator col-md-7">
+                    Creator: <a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a>
+                    @if (! empty($post->isCreator->avatar))
+                        <img src="{{ asset('images/' . $post->isCreator->avatar) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" target="_blank" max-height="300px" max-width="200px" >
+                    @endif                                 
+                    <br><br>
+                    <i>{!! $post->isCreator->description !!}</i>
+                </div>  
+                <div class="col-md-1">
+                </div>            
+                <div class="well post-advertise col-md-4">
+                    Advertising
                 </div>
             </div>
-            <br><br>
-            <hr>
-        @endforeach
-        {{ $posts->links() }}    
-    </div>
+        </div>
+        <div class="divider"><hr></div>
+    @endforeach
+    <br>
+    {{ $posts->links() }}    
+
 @endsection
 
 @section('scripts')

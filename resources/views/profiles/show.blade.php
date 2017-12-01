@@ -47,12 +47,12 @@
                 </dd>
             </dl>               
             <dl class="dl-horizontal">
-                <dt>Created at:</dt>
-                <dd>{{ $user->created_at }}</dd>
-            </dl>
+                <dt>About me:</dt>
+                <dd>{!! $user->description !!}</dd>
+            </dl>            
             <dl class="dl-horizontal">
-                <dt>Last update:</dt>
-                <dd>{{ $user->updated_at }}</dd>
+                <dt>Member since:</dt>
+                <dd>{{ $user->created_at }}</dd>
             </dl>
         </div>
     </div>

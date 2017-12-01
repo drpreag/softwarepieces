@@ -2,51 +2,46 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-6" align="right">        
+        <div class="col-md-6"></div>
+        <div class="col-md-6" align="right">
             {!! Form::open(['url' => 'news/all', 'id'=>'form', 'method' => 'GET']) !!}
             <div class="input-group add-on">
                 {{ Form::select('category', $newsCategory, $category, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
             </div>
             {!! Form::close() !!}
         </div>
-    </div>
+    </div> 
+
     <br>
-    <div class="gtco-container">
-        @foreach ($news as $newz)
-            <div>
-                <a href="{{ $newz->url }}" target="_blank">
-                    <div class="text-left gtco-heading">
-                        <h3>
-                            {{ $newz->title }}
-                        </h3>
-                        @if (! empty($newz->imgurl))
-                            <img src="{{ $newz->imgurl }}" target="_blank" height="100px" max-width="200px">
-                        @endif      
-                        <div>
-                            <p>{!! $newz->post !!}</p>
-                            Read more <a href="{{ $newz->url }}" target="_blank">here...</a>
-                        </div>
-                        <br>
-                        @if (! empty($newz->newsCategory->name))
-                            <div>
-                                Category: <b>{{ $newz->newsCategory->name }}</b>
-                            </div>
-                        @endif
-                        <div>Creator: 
-                            <a href="{{ route('users.show_profile', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a>
-                        </div>
-                        <div>
-                            Created: <b>{{ substr($newz->created_at,0,10) }}</b>
-                        </div>  
-                    </div>   
-                </a>
+    @foreach ($news as $newz)
+        <div class="gtco-container divider">
+
+            <div class="post-body">
+                <br>
+                <h3><b>{{ $newz->title }}</b></h3>
+                @if (! empty($newz->imgurl))
+                    <img src="{{ $newz->imgurl }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" width="400px" target="_blank">
+                @endif
+                {!! $newz->post !!}
+                Read more <a href="{{ $newz->url }}" target="_blank">here...</a>
+                <br>
+                @if (! empty($newz->newsCategory->name))
+                    <div>
+                        Category: <b>{{ $newz->newsCategory->name }}</b>
+                    </div>
+                @endif
+                <div>
+                    Published by: <a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
+                </div>
             </div>
-            <hr>
-        @endforeach
-        {{ $news->links() }}    
-    </div>
+
+        </div>
+
+        <div class="divider"><hr></div>            
+    @endforeach
+    <br>
+    {{ $news->links() }}    
+
 @endsection
 
 @section('scripts')

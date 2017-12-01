@@ -1461,24 +1461,26 @@ form label {
 .post-body {
     font-size: 14px;
     height: auto;
-    min-height: 450px;
+    min-height: 400px;
     text-align: left;
-
 }
 
 .post-creator {
-    font-size: 13px;
-    height: auto;
-    min-height: 250px;
-    text-align: left;
-    vertical-align: middle;
-}
-
-well {
     font-size: 12px;
     height: auto;
-    min-height: 240px;
-    text-align: left;
-    padding: 5px 5px;
+    min-height: 200px;
+    text-align: left;     
 }
 
+.post-advertise {
+    font-size: 14px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.divider {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
