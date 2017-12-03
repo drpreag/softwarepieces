@@ -42,7 +42,7 @@ class BlogController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => [
-            'all', 'show_public'
+            'all', 'show_blog'
         ]]);
 
         $this->paginator = env('PAGINATOR', 20);
@@ -297,11 +297,11 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_public($id)
+    public function show_blog($id)
     {
         $post = Blog::findOrFail($id);
         
-        return view('blog.show_public')
+        return view('blog.show_blog')
             ->with('post',$post);
     }
 }

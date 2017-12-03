@@ -1,5 +1,7 @@
 @extends('partials._main')
 
+@section('description', 'Open Source news')
+
 @section('content')
     <div class="row">
         <div class="col-md-6"></div>
@@ -31,7 +33,7 @@
                     </div>
                 @endif
                 <div>
-                    Published by: <a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
+                    Shared by: <a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
                 </div>
             </div>
 

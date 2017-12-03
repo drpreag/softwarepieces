@@ -42,7 +42,7 @@ Route::resource ('news', 'NewsController' );
 
 Route::get ('blog/{id}/delete', ['uses' => 'BlogController@delete', 'as' => 'blog.delete']);
 Route::get ('blog/all', ['uses' => 'BlogController@all', 'as' => 'blog.all']);
-Route::get ('blog/{id}/show_public', ['uses' => 'BlogController@show_public', 'as' => 'blog.show_public']);
+Route::get ('blog/{id}/show_blog', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
 Route::resource ('blog', 'BlogController' );
 
 Route::resource ('profiles', 'ProfilesController' );

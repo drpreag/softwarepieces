@@ -45,7 +45,7 @@
 				<dd>{{ $newz->newsCategory->name }}</dd>	
 			</dl>
 			<dl class="dl-horizontal">
-				<dt>Creator:</dt>
+				<dt>Shared by:</dt>
 				<dd>{{ $newz->isCreator->name }}</dd>
 			</dl>			
 			<dl class="dl-horizontal">

@@ -1,5 +1,11 @@
 @extends('partials._main')
 
+@section('description', 'Open Source blog')
+
+@section('keywords')
+{{ $post->keywords }}
+@endsection
+
 @section('title', '| View Post')
 
 @section('content')
@@ -37,7 +43,7 @@
 
         <div class="row">        
             <div class="well post-creator col-md-7">
-                Creator: <a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a>     
+                Published by: <a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a>     
                 @if (! empty($post->isCreator->avatar))
                     <img src="{{ asset('images/' . $post->isCreator->avatar) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" target="_blank" max-height="300px" max-width="200px" >
                 @endif                                 
