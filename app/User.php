@@ -12,7 +12,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\role as Role;
+use App\Role as Role;
+use App\Blog as Blog;
 
 /**
  * User
@@ -53,5 +54,25 @@ class User extends Authenticatable
     public function hasRole()
     {
         return $this->belongsTo('App\Role', 'role', 'id');
+    }
+
+    /**
+     * Number of news articles that user shared
+     *
+     * @return integer
+     */
+    public function sharedNewsCount()
+    {
+        return Role::where('creator', $this->id)->count();
+    }
+
+    /**
+     * Number of news articles that user wrote
+     *
+     * @return integer
+     */
+    public function writtenBlogCount()
+    {
+        return Blog::where('creator', $this->id)->count();
     }    
 }

@@ -11,7 +11,6 @@
             </div>
             <div class="col-md-4" align="right">
                 <a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>               
-                <a href="{{ route('profiles.edit', $user->id) }}" class="btn btn-success btn-xs">Edit profile</a>
             </div>
         </div>
 
@@ -49,11 +48,19 @@
             <dl class="dl-horizontal">
                 <dt>About me:</dt>
                 <dd>{!! $user->description !!}</dd>
-            </dl>            
+            </dl>
             <dl class="dl-horizontal">
                 <dt>Member since:</dt>
                 <dd>{{ $user->created_at }}</dd>
             </dl>
+            <dl class="dl-horizontal">
+                <dt>Number of shared<br>news articles:</dt>
+                <dd>{{ $user->sharedNewsCount() }}</dd>
+            </dl>  
+            <dl class="dl-horizontal">
+                <dt>Number of written<br>blog articles:</dt>
+                <dd>{{ $user->writtenBlogCount() }}</dd>
+            </dl> 
         </div>
     </div>
 @endsection

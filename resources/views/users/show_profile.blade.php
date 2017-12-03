@@ -51,7 +51,7 @@
             <dl class="dl-horizontal">
                 <dt>Description:</dt>
                 <dd>{!! $user->description !!}</dd>
-            </dl>                          
+            </dl>
             <dl class="dl-horizontal">
                 <dt>Created at:</dt>
                 <dd>{{ $user->created_at }}</dd>
