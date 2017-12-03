@@ -13,6 +13,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Role as Role;
+use App\News as News;
 use App\Blog as Blog;
 
 /**
@@ -63,7 +64,7 @@ class User extends Authenticatable
      */
     public function sharedNewsCount()
     {
-        return Role::where('creator', $this->id)->count();
+        return News::where('creator', $this->id)->count();
     }
 
     /**
