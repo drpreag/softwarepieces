@@ -24,14 +24,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
         $schedule->call(
             function(){
                 // you can pass queue name instead of default
                 Artisan::call('queue:listen', array('--queue' => 'default'));
             }
-        )->name('ensurequeueisrunning')->withoutOverlapping()->everyMinute();      
+        )->name('ensurequeueisrunning')->withoutOverlapping()->everyMinute();
+
+        $schedule->command('horizon:snapshot')->everyMinute();
+
     }
 
     /**
