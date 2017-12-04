@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use App\User;
 use App\Category;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewNewsShared;
 
 /**
  * NewsController
@@ -118,6 +120,12 @@ class NewsController extends Controller
         $newz->creator = Auth::user()->id;
         
         if ($newz->save()) {
+
+            $editors = User::where('active', true)->where('role', '>=', 6)->get();            
+            foreach ($editors as $editor) {
+                Mail::to($editor->email)->queue(new NewNewsshared($editor, $newz));
+            }            
+
             Session::flash('success', 'Newz succefully updated.');
             return redirect()->route('news.show', $newz->id);
         } else {
@@ -274,9 +282,9 @@ class NewsController extends Controller
         $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
 
         if (is_null($category)) {   
-            $news = News::where('active', true)->orderBy('id', 'desc')->paginate($this->paginator);
+            $news = News::where('active', true)->where('approved', true)->orderBy('id', 'desc')->paginate($this->paginator);
         } else {
-            $news = News::where('active', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
+            $news = News::where('active', true)->where('approved', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
         }
 
         return view ('news.all')

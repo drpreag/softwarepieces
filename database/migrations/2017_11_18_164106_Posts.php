@@ -23,6 +23,7 @@ class Posts extends Migration
             $table->integer('creator')->unsigned();         // FK to users table
             $table->integer('category')->unsigned();        // FK to categories table
             $table->boolean('active')->default(true); 
+            $table->boolean('approved')->default(false);            
             $table->string('image')->nullable();
             $table->string('keywords')->length(128)->nullable(); 
             $table->string('slug')->length(128)->nullable(); 

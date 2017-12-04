@@ -24,6 +24,7 @@ class News extends Migration
             $table->integer('creator')->unsigned();         // FK to users table
             $table->integer('category')->unsigned();        // FK to categories table
             $table->boolean('active')->default(true); 
+            $table->boolean('approved')->default(false);
             $table->string('slug')->length(128)->nullable();            
             $table->timestamps();
         });

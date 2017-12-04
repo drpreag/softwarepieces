@@ -18,6 +18,8 @@ use App\Category;
 use Purifier;
 use Session;
 use Image;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewBlogPost;
 
 /**
  * BlogController
@@ -140,6 +142,11 @@ class BlogController extends Controller
         $post->active = true;
 
         if ($post->save()) {
+            $editors = User::where('active', true)->where('role', '>=', 6)->get();
+            foreach ($editors as $editor) {
+                Mail::to($editor->email)->queue(new NewBlogPost($editor, $post));
+            }
+
             Session::flash('success', 'The blog post was successfully saved!');
             return redirect()->route('blog.show', $post->id);
         } else {
@@ -280,9 +287,9 @@ class BlogController extends Controller
         $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
 
         if (is_null($category)) {   
-            $posts = Blog::where('active', true)->orderBy('id', 'desc')->paginate($this->paginator);
+            $posts = Blog::where('active', true)->where('approved', true)->orderBy('id', 'desc')->paginate($this->paginator);
         } else {
-           $posts = Blog::where('active', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
+           $posts = Blog::where('active', true)->where('approved', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
         }
 
         return view ('blog.all')
@@ -301,7 +308,8 @@ class BlogController extends Controller
     {
         $post = Blog::findOrFail($id);
         
-        return view('blog.show_blog')
-            ->with('post',$post);
+        if ($post->active==true and $post->approved==true)
+            return view('blog.show_blog')
+                    ->with('post',$post);
     }
 }

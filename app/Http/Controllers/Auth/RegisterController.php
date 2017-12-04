@@ -65,12 +65,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //return User::create([
-        //    'name' => $data['name'],
-        //    'email' => $data['email'],
-        //    'password' => bcrypt($data['password']),
-        //]);
-
         $user = User::create(
             [
                 'name' => $data['name'],
@@ -83,8 +77,8 @@ class RegisterController extends Controller
         foreach ($administrators as $admin) {
             Mail::to($admin->email)->send(new NewUserNotice($user));
         }
-
         Mail::to($user->email)->send(new NewUserWelcome($user));
-        return $user;         
+
+        return $user;
     }
 }

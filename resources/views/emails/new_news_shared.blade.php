@@ -65,11 +65,13 @@
     	<div>
     		<div>
                 <br>
-    			Hi {{ $user->name }}, 
+    			Hi {{ $editor->name }}, 
     			<br><br>
-    			Thank you for joining this Open Source commmunity. We are very glad that we have you here.
+    			User <strong>{{ $newz->isCreator->name }}</strong> wrote a new blog post<br> 
+                Title: <strong>{{ $newz->title }}</strong><br>
+                Body: <i>{!! $newz->post !!}</i><br>
+                Please check it over here <strong>{{ url('news', $newz->id) }}</strong> and approve it if possible.
                 <br><br>
-                We hope that you will find our News and Blog sections informative. Also, if you think of yourself as expert in any of categories that we cover here, you are most welcome to contribute to our blog. Please contact us at <a href="mailto:root@softwarepieces.com">root@softwarepieces.com</a> for this.
     		<div>
     	</div> 
     </body>

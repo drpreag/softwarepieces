@@ -26,6 +26,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(
+            function(){
+                // you can pass queue name instead of default
+                Artisan::call('queue:listen', array('--queue' => 'default'));
+            }
+        )->name('ensurequeueisrunning')->withoutOverlapping()->everyMinute();      
     }
 
     /**
