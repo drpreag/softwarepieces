@@ -312,4 +312,54 @@ class BlogController extends Controller
             return view('blog.show_blog')
                     ->with('post',$post);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function approve($id)
+    {
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $post = Blog::findOrFail($id);
+        $post->approved = true;
+        // update model in the database
+        if ($post->save()) {
+            Session::flash('success', 'The blog post was successfully saved!');
+            return redirect()->route('blog.show', $post->id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
+    }    
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function revoke_approval($id)
+    {
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $post = Blog::findOrFail($id);
+        $post->approved = false;
+        // update model in the database
+        if ($post->save()) {
+            Session::flash('success', 'The blog post was successfully saved!');
+            return redirect()->route('blog.show', $post->id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
+    }        
 }

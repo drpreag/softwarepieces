@@ -29,11 +29,19 @@
 				{{ Form::label('keywords', 'Keywords: (coma delimited)') }}
 				{{ Form::text('keywords', null, array('class' => 'form-control', 'maxlength' => '255')) }}
 
-				{{ Form::label('slug', 'Slug (unique)') }}
+				{{ Form::label('slug', 'Slug (unique):') }}
 				{{ Form::text('slug', null, ["class" => 'form-control']) }}
 
 				{{ Form::label('creator', 'Creator:') }}				
 				{{ Form::text('creator', $post->isCreator->name, array('class' => 'form-control', 'readonly'=>'readonly')) }}
+
+				{{ Form::label('approved', 'Approved:') }}<br>
+				@if ( $post->approved==1 )
+					<button type="button" class="btn btn-xs btn-success">Approved</button>
+				@else
+					<button type="button" class="btn btn-xs btn-danger">Not approved</button>
+				@endif				
+				<br>
 
 				{{ Form::label('created_at', 'Created at:') }}				
 				{{ Form::text('created_at', null, array('class' => 'form-control', 'readonly'=>'readonly')) }}	

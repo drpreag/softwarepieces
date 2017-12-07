@@ -291,5 +291,56 @@ class NewsController extends Controller
             ->with('news', $news)
             ->with('newsCategory', $newsCategory)
             ->with('category', $category);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function approve($id)
+    {
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $newz = News::findOrFail($id);
+        $newz->approved = true;
+        // update model in the database
+        if ($newz->save()) {
+            Session::flash('success', 'The news article was successfully saved!');
+            return redirect()->route('news.show', $newz->id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
     }    
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function revoke_approve($id)
+    {
+        if (Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+
+        $newz = News::findOrFail($id);
+        $newz->approved = false;
+        // update model in the database
+        if ($newz->save()) {
+            Session::flash('success', 'The news article was successfully saved!');
+            return redirect()->route('news.show', $newz->id);
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
+    }
+
 }

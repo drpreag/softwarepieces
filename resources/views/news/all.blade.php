@@ -27,9 +27,9 @@
                 {!! $newz->post !!}
                 Read more <a href="{{ $newz->url }}" target="_blank">here...</a>
                 <br>
-                @if (! empty($newz->newsCategory->name))
+                @if (! empty($newz->inCategory->name))
                     <div>
-                        Category: <b>{{ $newz->newsCategory->name }}</b>
+                        Category: <b>{{ $newz->inCategory->name }}</b>
                     </div>
                 @endif
                 <div>

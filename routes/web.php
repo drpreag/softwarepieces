@@ -38,11 +38,15 @@ Route::resource ('categories', 'CategoriesController' );
 
 Route::get ('news/{id}/delete', ['uses' => 'NewsController@delete', 'as' => 'news.delete']);
 Route::get ('news/all', ['uses' => 'NewsController@all', 'as' => 'news.all']);
+Route::get ('news/{id}/approve', ['uses' => 'NewsController@approve', 'as' => 'news.approve']);
+Route::get ('news/{id}/revoke_approve', ['uses' => 'NewsController@revoke_approve', 'as' => 'news.revoke_approve']);
 Route::resource ('news', 'NewsController' );
 
 Route::get ('blog/{id}/delete', ['uses' => 'BlogController@delete', 'as' => 'blog.delete']);
 Route::get ('blog/all', ['uses' => 'BlogController@all', 'as' => 'blog.all']);
 Route::get ('blog/{id}/show_blog', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
+Route::get ('blog/{id}/approve', ['uses' => 'BlogController@approve', 'as' => 'blog.approve']);
+Route::get ('blog/{id}/revoke_approve', ['uses' => 'BlogController@revoke_approve', 'as' => 'blog.revoke_approve']);
 Route::resource ('blog', 'BlogController' );
 
 Route::resource ('profiles', 'ProfilesController' );

@@ -34,7 +34,7 @@ class News extends Model
      *
      * @return App\Category
      */
-    public function newsCategory()
+    public function inCategory()
     {
     	return $this->belongsTo('App\Category', 'category', 'id');
     }

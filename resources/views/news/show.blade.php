@@ -4,19 +4,41 @@
 
 @section('content')
 
-	<div class="container">
+	<div class="gtco-container">
+			
+		<div align="right">
+			<a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
+			<a href="{{ route('news.edit', $newz->id) }}" class="btn btn-success btn-xs">Edit</a>
+			<a href="{{ route('news.delete', $newz->id) }}" class="btn btn-danger btn-xs">Delete</a>
+		</div>
+		<br>
+
+        <div class="row">
+            <div class="col-md-4">
+                Category: <b>{{ $newz->inCategory->name }}</b><br>
+            </div>
+            <div class="col-md-4" align="center">
+                @if ( $newz->approved==1 )
+                    <a href="{{ route('news.revoke_approve', $newz->id) }}" class="btn btn-success btn-xs">Approved</a>                    
+                @else
+                    <a href="{{ route('news.approve', $newz->id) }}" class="btn btn-danger btn-xs">Not approved</a>
+                @endif                
+            </div>            
+            <div class="col-md-4" align="right">
+                Creator: <a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a><br>
+                Published: <b>{{ substr($newz->created_at,0,10) }}</b>
+            </div>
+        </div>
+		<br>
+
+
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-md-4">
 				<h3><b>{{ $newz->title }}</b></h3>		
-			</div>
-			<div class="col-md-4" align="right">
-				<a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
-				<a href="{{ route('news.edit', $newz->id) }}" class="btn btn-success btn-xs">Edit</a>
-				<a href="{{ route('news.delete', $newz->id) }}" class="btn btn-danger btn-xs">Delete</a>
 			</div>
 		</div>	
 
-		<div class="well">
+		<div class="post-body">
 			<dl class="dl-horizontal">
 				<dt>Id #:</dt>
 				<dd>{{ $newz->id }}</dd>
@@ -42,7 +64,7 @@
 			</dl>
 			<dl class="dl-horizontal">
 				<dt>Category:</dt>
-				<dd>{{ $newz->newsCategory->name }}</dd>	
+				<dd>{{ $newz->inCategory->name }}</dd>	
 			</dl>
 			<dl class="dl-horizontal">
 				<dt>Shared by:</dt>

@@ -21,7 +21,8 @@
 				<th class="text-right">#&nbsp</th>
 				<th>Title</th>
 				<th>Body</th>
-				<th class="text-center">Active</th>				
+				<th class="text-center">Active</th>
+				<th class="text-center">Approved</th>				
 				<th>Creator</th>
 				<th>Category</th>					
 				<th>Created at</th>
@@ -41,8 +42,13 @@
 								<button type="button" class="btn btn-xs btn-danger">Inactive</button>
 							@endif
 						</td>
+						<td align="center">
+							@if ( $newz->approved==1 )
+								<button type="button" class="btn btn-xs btn-success">Approved</button>
+							@endif
+						</td>
 						<td>{{ $newz->isCreator->name }}</td>
-						<td>{{ substr(strip_tags($newz->newsCategory->name), 0, 30) }}{{ strlen(strip_tags($newz->newsCategory->name)) > 30 ? "..." : "" }}</td>
+						<td>{{ substr(strip_tags($newz->inCategory->name), 0, 30) }}{{ strlen(strip_tags($newz->inCategory->name)) > 30 ? "..." : "" }}</td>
 						<td>{{ $newz->created_at }}</td>
 						<td>{{ $newz->updated_at }}</td>
 					</tr>

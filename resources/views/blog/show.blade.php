@@ -8,17 +8,24 @@
         <div align="right">
             <a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
             <a href="{{ route('blog.edit', $post->id) }}" class="btn btn-success btn-xs">Edit</a>
-            <a href="{{ route('blog.delete', $post->id) }}" class="btn btn-danger btn-xs">Delete</a>                
+            <a href="{{ route('blog.delete', $post->id) }}" class="btn btn-danger btn-xs">Delete</a>               
         </div>              
+        <br> 
 
-        <div>
-            <div class="row">
-                <div class="col-md-6">
-                    Category: <b>{{ $post->inCategory->name }}</b>
-                </div>
-                <div class="col-md-6" align="right">
-                    Published: <b>{{ substr($post->created_at,0,10) }}</b>
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                Category: <b>{{ $post->inCategory->name }}</b><br>
+            </div>
+            <div class="col-md-4" align="center">
+                @if ( $post->approved==1 )
+                    <button type="button" class="btn btn-xs btn-success">Approved</button>
+                @else
+                    <a href="{{ route('blog.approve', $post->id) }}" class="btn btn-danger btn-xs">Not approved</a>
+                @endif                
+            </div>            
+            <div class="col-md-4" align="right">
+                Creator: <a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a><br>
+                Published: <b>{{ substr($post->created_at,0,10) }}</b>
             </div>
         </div>
 
@@ -35,23 +42,6 @@
             @endif      
             {!! $post->body !!}
         </div>
-
-        <div class="row">        
-            <div class="well post-creator col-md-7">
-                Creator: <a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a>
-                @if (! empty($post->isCreator->avatar))
-                    <img src="{{ asset('images/' . $post->isCreator->avatar) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" target="_blank">
-                @endif                                 
-                <br><br>
-                <i>{!! $post->isCreator->description !!}</i>
-            </div>  
-            <div class="col-md-1">
-            </div>            
-            <div class="well post-advertise col-md-4">
-                Advertising
-            </div>
-        </div>
-
     </div>
 	@if (1>2)
 	<div id="backend-comments" style="margin-top: 50px;">

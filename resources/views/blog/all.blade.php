@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="post-body">
+            <div>
                 <br>
                 <h3><b>{{ $post->title }}</b></h3>
                 @if (! empty($post->subtitle))
@@ -37,7 +37,7 @@
                 @if (! empty($post->image))
                     <img src="{{ asset('images/' . $post->image) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" target="_blank" max-height="240px" max-width="300px" align="right">
                 @endif
-                {!! substr($post->body, 0, 1024) !!}...<br>
+                {!! substr($post->body, 0, 768) !!}...<br><br>
                 Read more <a href="{{ route('blog.show_blog', $post->id) }}">here...</a>
             </div>
 
