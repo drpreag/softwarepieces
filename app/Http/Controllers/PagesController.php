@@ -36,7 +36,6 @@ class PagesController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
         $this->paginator = env('PAGINATOR', 20);         
     }
 
@@ -57,57 +56,7 @@ class PagesController extends Controller
      */
     public function getDashboard(Request $request)
     {
-        if (is_null($request->category)) {
-            $news = News::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
-        } else {
-            $news = News::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
-        }
-
-        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
-
-        return view('pages.dashboard')
-                ->with('news', $news)
-                ->with('newsCategory', $newsCategory);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getNews(Request $request)
-    {
-        if (is_null($request->category)) {
-            $news = News::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
-        } else {
-            $news = News::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
-        }
-
-        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
-
-        return view('pages.news')
-                ->with('news', $news)
-                ->with('newsCategory', $newsCategory);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getBlog(Request $request)
-    {
-        if (is_null($request->category)) {
-            $posts = Blog::where('active', true)->orderBy('created_at', 'desc')->paginate($this->paginator);
-        } else {
-            $posts= Blog::where('active', true)->where('category',$request->category)->orderBy('created_at', 'desc')->paginate($this->paginator);
-        }
-
-        $blogCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
-
-        return view('pages.blog')
-                ->with('posts', $posts)
-                ->with('blogCategory', $blogCategory);
+        return view('pages.dashboard');
     }
 
     /**
@@ -119,4 +68,14 @@ class PagesController extends Controller
     {
         return view('pages.licence');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAbout()
+    {
+        return view('pages.about');
+    }    
 }

@@ -1,21 +1,21 @@
 @extends('partials._main')
 
-@section('title', '| Licence')
+@section('title', '| About')
 
 @section('keywords')
-licence, terms of use
+about us
 @endsection
 
 @section('content')
     <div class="container">
-        <h3>Licence information</h3>
+        <h3>About us</h3>
 
         <div class="well" align="center">
             ...
             to add text here
             ...
             <br>
-            <br>
+            <br>            
             Copyright <b>Predrag Vlajkovic drPreAG</b><br>
             <br>
             <br>

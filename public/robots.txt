@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
-/horizon
-/newsdashboard
+Disallow: /login
+Disallow: /register
+Disallow: /horizon

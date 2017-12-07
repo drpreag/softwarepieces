@@ -14,9 +14,8 @@
 // public pages
 Route::get('/', ['uses' => 'PagesController@getDashboard', 'as' => 'dashboard']);
 Route::get('dashboard', ['uses' => 'PagesController@getDashboard', 'as' => 'dashboard']);
-Route::get('newsdashboard', ['uses' => 'PagesController@getNews', 'as' => 'newsdashboard']);
-Route::get('blogdashboard', ['uses' => 'PagesController@getBlog', 'as' => 'blogdashboard']);
 Route::get('licence', ['uses' => 'PagesController@getLicence', 'as' => 'licence']);
+Route::get('about', ['uses' => 'PagesController@getAbout', 'as' => 'about']);
 Route::get('user_error', ['uses' => 'PagesController@getUserError', 'as' => 'user_error']);
 
 // Auth pages
@@ -50,5 +49,3 @@ Route::get ('blog/{id}/revoke_approve', ['uses' => 'BlogController@revoke_approv
 Route::resource ('blog', 'BlogController' );
 
 Route::resource ('profiles', 'ProfilesController' );
-
-//Route::get('/home', 'HomeController@index')->name('home');
