@@ -66,7 +66,7 @@
 	        <!-- Nav tabs -->
 	        <ul class="nav nav-tabs" role="tablist">
 	            <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab"><b>News</b></a></li>
-	            <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"><b>Posts</b></a></li>
+	            <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"><b>Blog</b></a></li>
 	        </ul>
 	        <!-- Tab panes -->
 	        <div class="tab-content">
@@ -98,7 +98,7 @@
 												@endif
 											</td>
 											<td>{{ $newz->isCreator->name }}</td>
-											<td>{{ substr(strip_tags($newz->newsCategory->name), 0, 30) }}{{ strlen(strip_tags($newz->newsCategory->name)) > 30 ? "..." : "" }}</td>
+											<td>{{ substr(strip_tags($newz->inCategory->name), 0, 30) }}{{ strlen(strip_tags($newz->inCategory->name)) > 30 ? "..." : "" }}</td>
 											<td>{{ $newz->created_at }}</td>
 											<td>{{ $newz->updated_at }}</td>
 										</tr>
