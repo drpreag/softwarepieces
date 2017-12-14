@@ -1484,3 +1484,10 @@ form label {
     margin-bottom: 10px;
     padding-bottom: 10px;
 }
+
+.error-container {
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+    min-height: 600px;
+}
