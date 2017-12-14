@@ -72,6 +72,7 @@
 	<script>
 		tinymce.init({
 			selector: 'textarea',
+			extended_valid_elements : 'img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]',
 			plugins: 'link code',
 			menubar: true
 		});
