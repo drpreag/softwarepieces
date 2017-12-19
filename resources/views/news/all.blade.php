@@ -1,7 +1,7 @@
 @extends('partials._main')
 
 @section('description', 'Open Source news')
-@section('title', '| All News')
+@section('title', '| Open Source News')
 
 @section('content')
     <div class="row">
