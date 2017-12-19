@@ -1,6 +1,7 @@
 @extends('partials._main')
 
 @section('description', 'Open Source blog')
+@section('title', '| Open Source Blog')
 
 @section('content')
     <div class="row">
