@@ -49,6 +49,7 @@
 			<script>
 				tinymce.init({ 
 				    selector: 'textarea',
+				    plugins: 'link code',
 				    setup: function (editor) {
 				        editor.on('change', function (e) {
 				            editor.save();
