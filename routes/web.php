@@ -49,3 +49,10 @@ Route::get ('blog/{id}/revoke_approve', ['uses' => 'BlogController@revoke_approv
 Route::resource ('blog', 'BlogController' );
 
 Route::resource ('profiles', 'ProfilesController' );
+
+Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => ['admin'], 'namespace' => 'Admin'], function()
+{
+   CRUD::resource('roles', 'RolesCrudController');
+   CRUD::resource('users', 'UsersCrudController');
+   CRUD::resource('categories', 'CategoriesCrudController');   
+});

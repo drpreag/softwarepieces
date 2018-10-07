@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=7.2.0",
+        "backpack/crud": "^3.4",
+        "barryvdh/laravel-elfinder": "^0.4.1",
         "fideloper/proxy": "~4.0",
         "intervention/image": "^2.4",
         "laravel/framework": "5.7.*",
@@ -17,14 +19,16 @@
         "tinymce/tinymce": "^4.7"
     },
     "require-dev": {
+        "backpack/generators": "^1.2",
         "filp/whoops": "~2.1.10",
         "fnayou/standards": "^1.2",
         "fzaninotto/faker": "~1.4",
+        "laracasts/generators": "^1.1",
         "mockery/mockery": "0.9.*",
         "pdepend/pdepend": "@stable",
         "phpunit/phpunit": "~6.0",
         "pragmarx/laravelcs": "^0.1.0",
-        "squizlabs/php_codesniffer": "2.9.0"        
+        "squizlabs/php_codesniffer": "2.9.0"
     },
     "autoload": {
         "classmap": [
