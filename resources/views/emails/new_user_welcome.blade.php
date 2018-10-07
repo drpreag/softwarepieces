@@ -70,7 +70,7 @@
     			Thank you for joining this Open Source commmunity. We are very glad that we have you here.
                 <br><br>
                 We hope that you will find our News and Blog sections informative. Also, if you think of yourself as expert in any of categories that we cover here, you are most welcome to contribute to our blog. Please contact us at <a href="mailto:root@softwarepieces.com">root@softwarepieces.com</a> for this.
-    		<div>
+    		</div>
     	</div> 
     </body>
 </html>
