@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
@@ -25,7 +26,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,4 +37,22 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    // overwriting Controller->resetPassword function
+    // prevent default login
+    protected function resetPassword($user, $password)
+    {
+        $user->forceFill([
+            'password' => bcrypt($password),
+            'remember_token' => Str::random(60),
+        ])->save();
+
+        /**
+         * Peca comment:
+         * following line does automaticaly login after password reset,
+         * which I want to avoid, since
+         * administrator should approve someones registration
+         */
+        //$this->guard()->login($user);
+    } 
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Users extends Model
+class News extends Model
 {
     use CrudTrait;
 
@@ -15,11 +15,11 @@ class Users extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'users';
-    // protected $primaryKey = 'id';
+    protected $table = 'news';
+    protected $primaryKey = 'id';
     // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'active', 'role'];
+    protected $guarded = ['id'];
+    protected $fillable = ['slug', 'url', 'title', 'imgurl', 'post', 'category', 'creator'];
     // protected $hidden = [];
     // protected $dates = [];
 

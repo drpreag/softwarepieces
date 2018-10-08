@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,4 +37,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /*
+        by drPreAG
+        peace of code that assure only users with flag active==TRUE (active==1) can log in
+        inactive users can not log in even is user/pass is OK
+    */
+    protected function validateLogin(Request $request)
+    {
+        $this->validate(
+            $request,
+            [$this->username() => 'required|exists:users,' . $this->username() . ',active,1','password'=>'required',],
+            [$this->username() . '.exists' => 'The selected email is invalid or the account has been disabled.']
+        );
+    }    
 }
