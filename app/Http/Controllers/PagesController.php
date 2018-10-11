@@ -56,7 +56,20 @@ class PagesController extends Controller
      */
     public function getDashboard(Request $request)
     {
-        return view('pages.dashboard');
+        $category = $request->category;
+
+        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+
+        if (is_null($category)) {   
+            $news = News::where('active', true)->where('approved', true)->orderBy('id', 'desc')->paginate($this->paginator);
+        } else {
+            $news = News::where('active', true)->where('approved', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
+        }
+
+        return view ('news.all')
+            ->with('news', $news)
+            ->with('newsCategory', $newsCategory)
+            ->with('category', $category);      
     }
 
     /**

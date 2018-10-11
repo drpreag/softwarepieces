@@ -7,13 +7,12 @@
 }
 /* =======================================================
 *
-* 	Template Style 
+*   Template Style 
 *
 * ======================================================= */
 body {
   font-family: "Work Sans", Arial, sans-serif;
   font-weight: 400;
-  font-size: 14px;
   line-height: 1.5;
   color: #828282;
   background: #fff;
@@ -1404,20 +1403,6 @@ form label {
 /*# sourceMappingURL=style.css.map */
 
 /* added by drPreAG */
-
-.navbar-brand {
-  width: 180px;
-  height: 63px;
-  background: url(/img/logo.png) left center no-repeat;
-  background-color:#FFFFFF;
-  text-indent: -99999px; 
-  text-indent: 65px; 
-}
-
-.navbar-default {
-  background-color: #FFFFFF;
-  border: none;
-}
 
 .container {
   max-width: 1600px;

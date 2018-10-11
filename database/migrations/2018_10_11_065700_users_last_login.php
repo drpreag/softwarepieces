@@ -14,9 +14,9 @@ class UsersLastLogin extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('last_login_client', 255)->after('settings')->nullable();
-            $table->string('last_login_ip', 15)->after('settings')->nullable();
-            $table->timestamp('last_login_time')->after('settings')->nullable()->default(null);
+            $table->string('last_login_client', 255)->after('remember_token')->nullable();
+            $table->string('last_login_ip', 15)->after('remember_token')->nullable();
+            $table->timestamp('last_login_time')->after('remember_token')->nullable()->default(null);
         });
     }
 

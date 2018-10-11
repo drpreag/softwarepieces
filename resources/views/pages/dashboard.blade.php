@@ -1,14 +1,57 @@
 @extends('partials._main')
 
+@section('description', 'Open Source news')
+@section('title', '| Open Source News')
+
 @section('content')
-    <br><br><br><br>
     <div class="row">
-        <div class="col-xs-6" align="right">
-            <a href="{{ route('news.all') }}" class="btn btn-success btn-sm">News</a>
+        <div class="col-md-6"></div>
+        <div class="col-md-6" align="right">
+            {!! Form::open(['url' => 'news/all', 'id'=>'form', 'method' => 'GET']) !!}
+            <div class="input-group add-on">
+                {{ Form::select('category', $newsCategory, $category, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
+            </div>
+            {!! Form::close() !!}
         </div>
-        <div class="col-xs-6">
-            <a href="{{ route('blog.all') }}" class="btn btn-info btn-sm">Blog</a>
+    </div> 
+
+    <br>
+    @foreach ($news as $newz)
+        <div class="gtco-container divider">
+
+            <div class="post-body">
+                <br>
+                <h3><b>{{ $newz->title }}</b></h3>
+                @if (! empty($newz->imgurl))
+                    <img src="{{ $newz->imgurl }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" width="400px" target="_blank">
+                @endif
+                {!! $newz->post !!}
+                Read more <a href="{{ $newz->url }}" target="_blank">here...</a>
+                <br>
+                @if (! empty($newz->inCategory->name))
+                    <div>
+                        Category: <b>{{ $newz->inCategory->name }}</b>
+                    </div>
+                @endif
+                <div>
+                    Shared by: <a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
+                </div>
+            </div>
+
         </div>
-    </div>
-    <br><br><br><br>
+
+        <div class="divider"><hr></div>            
+    @endforeach
+    <br>
+    {{ $news->links() }}    
+
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+function submitform()
+{
+  this.form.submit();
+}
+</script>
 @endsection

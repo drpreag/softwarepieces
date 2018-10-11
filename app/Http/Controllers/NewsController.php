@@ -60,7 +60,10 @@ class NewsController extends Controller
             return redirect()->back();
         }
 
-        $news = News::orderBy('id', 'desc')->paginate($this->paginator);
+        $news = News::where('active', true)
+            ->where('approved', true)
+            ->orderBy('id', 'desc')
+            ->paginate($this->paginator);
 
         return view ('news.index')
             ->with('news', $news);
