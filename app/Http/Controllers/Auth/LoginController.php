@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+// use App\User;
+// use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon as Carbon;
 
 class LoginController extends Controller
 {
@@ -50,5 +53,12 @@ class LoginController extends Controller
             [$this->username() => 'required|exists:users,' . $this->username() . ',active,1','password'=>'required',],
             [$this->username() . '.exists' => 'The selected email is invalid or the account has been disabled.']
         );
-    }    
+    }
+
+    public function authenticated(Request $request, $user) {
+        $user->last_login_time = Carbon::now()->toDateTimeString();
+        $user->last_login_ip = $request->ip();
+        $user->last_login_client = str_limit($request->header('User-Agent'), 255);
+        $user->save();
+    }        
 }
