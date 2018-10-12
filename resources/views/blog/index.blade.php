@@ -21,10 +21,8 @@
 				<th class="text-right">#&nbsp</th>
 				<th>Title</th>
 				<th>Subtitle</th>
-				<th>Body</th>
 				<th class="text-center">Active</th>
 				<th class="text-center">Approved</th>
-				<th>Keywords</th>
 				<th>Slug</th>
 				<th>Creator</th>
 				<th>Created At</th>
@@ -35,8 +33,7 @@
 					<tr class="table-tr" data-url="{{ route('blog.show', $post->id) }}">
 						<th>{{ $post->id }}</th>	
 						<td>{{ substr($post->title, 0, 30) }}{{ strlen($post->title) > 50 ? "..." : "" }}</td>
-						<td>{{ substr($post->subtitle, 0, 30) }}{{ strlen($post->subtitle) > 30 ? "..." : "" }}</td>						
-						<td>{{ substr(strip_tags($post->body), 0, 50) }}{{ strlen(strip_tags($post->body)) > 50 ? "..." : "" }}</td>
+						<td>{{ substr($post->subtitle, 0, 30) }}{{ strlen($post->subtitle) > 30 ? "..." : "" }}</td>
 						<td align="center">
 							@if ( $post->active==1 )
 								<button type="button" class="btn btn-xs btn-info">Active</button>
@@ -49,7 +46,6 @@
 								<button type="button" class="btn btn-xs btn-success">Approved</button>
 							@endif
 						</td>						
-						<td>{{ substr($post->keywords, 0, 20) }}{{ strlen($post->keywords) > 20 ? "..." : "" }}</td>
 						<td>{{ substr($post->slug, 0, 20) }}{{ strlen($post->slug) > 20 ? "..." : "" }}</td>	
 						<td>{{ $post->isCreator->name }}</td>							
 						<td>{{ $post->created_at }}</td>

@@ -1,4 +1,4 @@
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light">
   
     <a class="navbar-brand" href="/news/all">
       <img src="/img/logo.png" width="111" height="40" alt="SoftwarePieces">
