@@ -7,7 +7,7 @@
 	<div class="gtco-container">
 			
 		<div align="right">
-			<a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
+			<a href="{{ route('news.index') }}" class="btn btn-info btn-xs">Back</a>
 			<a href="{{ route('news.edit', $newz->id) }}" class="btn btn-success btn-xs">Edit</a>
 			<a href="{{ route('news.delete', $newz->id) }}" class="btn btn-danger btn-xs">Delete</a>
 		</div>

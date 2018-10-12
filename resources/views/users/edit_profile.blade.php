@@ -25,15 +25,18 @@
             
             {{ csrf_field() }}
             {{ Form::hidden('id', null, array('class'=>'form-control', 'readonly'=>'readonly')) }}
-                     
+            <br>
             {{ Form::label('name', 'Name:') }}
             {{ Form::text('name', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}
-
+<br>
             {{ Form::label('avatar', 'Avatar URL:') }}
             {{ Form::text('avatar', null, array('class' => 'form-control', 'readonly'=>'readonly', 'maxlength' => '255')) }}
-
+<br>
             {{ Form::label('description', 'Decription:') }}
             {{ Form::textarea('description', null, array('class' => 'form-control')) }}
+<br>
+            {{ Form::label('mail_list', 'Apply for monthly digest newsletter:') }}
+            {{ Form::checkbox('mail_list', null, array('class' => 'form-control')) }}
 
             <br>
             <div class="row">

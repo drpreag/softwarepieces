@@ -24,8 +24,7 @@
 				<th>E-mail</th>
 				<th class="text-center">Active</th>
 				<th>Role</th>			
-				<th>Created at</th>
-				<th>Updated at</th>				
+				<th>Created at</th>			
 			</thead>
 
 			<tbody>
@@ -48,7 +47,6 @@
 						</td>
 						<td>{{ $user->hasRole->name }}</td>
 						<td>{{ $user->created_at }}</td>
-						<td>{{ $user->updated_at }}</td>
 					</tr>
 				@endforeach
 			</tbody>
