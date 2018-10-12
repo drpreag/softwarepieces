@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
             }
         )->name('ensurequeueisrunning')->withoutOverlapping()->everyMinute();
 
-        $schedule->command('horizon:snapshot')->everyMinute();
+        // $schedule->command('horizon:snapshot')->everyMinute();
     }
 
     /**

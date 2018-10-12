@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Laravel\Horizon\Horizon as Horizon;
+// use Laravel\Horizon\Horizon as Horizon;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 
@@ -27,11 +27,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // Only editor or higher can use Horizon
-        Horizon::auth(function ($request) {
-            $user = User::findOrFail(Auth::user()->id);
-            if ($user->role > 5)
-                return true;
-            return false;
-        });
+        // Horizon::auth(function ($request) {
+        //     $user = User::findOrFail(Auth::user()->id);
+        //     if ($user->role > 5)
+        //         return true;
+        //     return false;
+        // });
     }
 }

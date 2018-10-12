@@ -183,7 +183,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Laravel\Horizon\HorizonServiceProvider::class,
+        // Laravel\Horizon\HorizonServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class
 
 
