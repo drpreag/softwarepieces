@@ -20,13 +20,13 @@
 			<thead class="thead-inverse">
 				<th class="text-right">#&nbsp</th>
 				<th>Title</th>
-				<th>Body</th>
+				<th>Slug</th>				
+				<th>Category</th>
 				<th class="text-center">Active</th>
 				<th class="text-center">Approved</th>				
 				<th>Creator</th>
-				<th>Category</th>					
+				
 				<th>Created at</th>
-				<th>Updated at</th>				
 			</thead>
 
 			<tbody>					
@@ -34,7 +34,8 @@
 					<tr class="table-tr" data-url="{{ route('news.show', $newz->id) }}">
 						<td align="right">{{ $newz->id }}&nbsp</td>
 						<td>{{ substr(strip_tags($newz->title), 0, 70) }}{{ strlen(strip_tags($newz->title)) > 70 ? "..." : "" }}</td>
-						<td>{{ substr(strip_tags($newz->post), 0, 50) }}{{ strlen(strip_tags($newz->post)) > 50 ? "..." : "" }}</td>
+						<td>{{ substr(strip_tags($newz->slug), 0, 30) }}{{ strlen(strip_tags($newz->slug)) > 30 ? "..." : "" }}</td>
+						<td>{{ substr(strip_tags($newz->inCategory->name), 0, 30) }}{{ strlen(strip_tags($newz->inCategory->name)) > 30 ? "..." : "" }}</td>
 						<td align="center">
 							@if ( $newz->active==1 )
 								<button type="button" class="btn btn-xs btn-info">Active</button>
@@ -48,9 +49,7 @@
 							@endif
 						</td>
 						<td>{{ $newz->isCreator->name }}</td>
-						<td>{{ substr(strip_tags($newz->inCategory->name), 0, 30) }}{{ strlen(strip_tags($newz->inCategory->name)) > 30 ? "..." : "" }}</td>
 						<td>{{ $newz->created_at }}</td>
-						<td>{{ $newz->updated_at }}</td>
 					</tr>
 				@endforeach
 			</tbody>

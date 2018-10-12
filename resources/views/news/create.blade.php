@@ -21,6 +21,8 @@
 				{{ Form::label('title', 'Title:') }}
 				{{ Form::text('title', null, array('class' => 'form-control', 'required' => 'required', 'maxlength' => '128')) }}
 
+				{{ Form::label('slug', 'Slug:') }}
+				{{ Form::text('slug', null, array('class' => 'form-control', 'required' => 'required', 'maxlength' => '255')) }}				
 				{{ Form::label('imgurl', 'Image url:') }}
 				{{ Form::text('imgurl', null, array('class' => 'form-control', 'maxlength' => '255')) }}
 

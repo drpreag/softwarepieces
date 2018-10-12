@@ -9,7 +9,7 @@
 @section('content')
 
 	<div class="container">
-		<h1>Delete News</h1>
+		<h3>Delete News</h3>
 		<hr>		
 		{{ Form::open(['route' => ['news.destroy', $news->id], 'method' => 'DELETE']) }}
 		{{ csrf_field() }}

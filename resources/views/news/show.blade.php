@@ -45,12 +45,16 @@
 			</dl>
 			<dl class="dl-horizontal">
 				<dt>Title:</dt>
-				<dd><a href="{{ $newz->url }}" target="_blank">{{ $newz->title }}</a></dd>
+				<dd>{{ $newz->title }}</dd>
 			</dl>
 			<dl class="dl-horizontal">
 				<dt>URL:</dt>
 				<dd><a href="{{ $newz->url }}" target="_blank">{{ $newz->url }}</a></dd>
 			</dl>
+			<dl class="dl-horizontal">
+				<dt>Slug:</dt>
+				<dd>{{ $newz->slug }}</dd>
+			</dl>			
 			@if (! empty($newz->imgurl))
 				<dl class="dl-horizontal">
 					<dt>ImgUrl:</dt>
