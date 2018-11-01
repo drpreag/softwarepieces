@@ -17,6 +17,7 @@ Route::get('dashboard', ['uses' => 'PagesController@getDashboard', 'as' => 'dash
 Route::get('licence', ['uses' => 'PagesController@getLicence', 'as' => 'licence']);
 Route::get('about', ['uses' => 'PagesController@getAbout', 'as' => 'about']);
 Route::get('user_error', ['uses' => 'PagesController@getUserError', 'as' => 'user_error']);
+Route::get ('news/slug/{slug}', ['uses' => 'NewsController@show_slug', 'as' => 'news.show_slug']);
 
 // Auth pages
 Auth::routes();

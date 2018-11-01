@@ -1,6 +1,6 @@
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-md navbar-light container-fluid fixed-top">
   
-    <a class="navbar-brand" href="/news/all">
+    <a class="navbar-brand" href="/dashboard">
       <img src="/img/logo.png" width="111" height="40" alt="SoftwarePieces">
     </a>
 

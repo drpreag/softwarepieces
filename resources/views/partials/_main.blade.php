@@ -10,7 +10,7 @@
 
     @include('partials._nav')    
 
-    <div class="container"> <!-- start of body .container --> 
+    <div class="container-fluid"> <!-- start of body .container --> 
       
       @include('partials._messages')
 

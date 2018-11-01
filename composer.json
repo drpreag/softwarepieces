@@ -17,6 +17,7 @@
         "tinymce/tinymce": "^4.7"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2",
         "filp/whoops": "~2.1.10",
         "fnayou/standards": "^1.2",
         "fzaninotto/faker": "~1.4",

@@ -5,43 +5,39 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6"></div>
-        <div class="col-md-6" align="right">
+        <div class="col-md-8">
+            @foreach ($news as $newz)
+                <div class="post-body">
+                    <br>
+                    <h3><b>{{ $newz->title }}</b></h3>
+                    @if (! empty($newz->imgurl))
+                        <img src="{{ $newz->imgurl }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" width="200px" target="_blank">
+                    @endif
+                    {!! substr(strip_tags($newz->post), 0, 150) !!}
+                    <br>
+                    Read more <a href="{{ route('news.show_slug', [$newz->slug]) }}">here...</a>
+                    <br>
+                    @if (! empty($newz->inCategory->name))
+                        <div>
+                            Category: <b>{{ $newz->inCategory->name }}</b>
+                        </div>
+                    @endif
+                    <div>
+                        Shared by: <a href="{{ route('profiles.show', [$newz->creator]) }}"><b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
+                    </div>
+                </div>
+                <div class="divider"><hr></div>
+            @endforeach                
+        </div>
+        <div class="col-md-4">
             {!! Form::open(['url' => 'news/all', 'id'=>'form', 'method' => 'GET']) !!}
             <div class="input-group add-on">
                 {{ Form::select('category', $newsCategory, $category, array('class'=>'form-control', 'onchange'=>'submitform(this)', 'placeholder'=>'All categories...')) }}
             </div>
-            {!! Form::close() !!}
+            {!! Form::close() !!}            
         </div>
-    </div> 
+    </div>        
 
-    <br>
-    @foreach ($news as $newz)
-        <div class="gtco-container divider">
-
-            <div class="post-body">
-                <br>
-                <h3><b>{{ $newz->title }}</b></h3>
-                @if (! empty($newz->imgurl))
-                    <img src="{{ $newz->imgurl }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" width="400px" target="_blank">
-                @endif
-                {!! $newz->post !!}
-                Read more <a href="{{ $newz->url }}" target="_blank">here...</a>
-                <br>
-                @if (! empty($newz->inCategory->name))
-                    <div>
-                        Category: <b>{{ $newz->inCategory->name }}</b>
-                    </div>
-                @endif
-                <div>
-                    Shared by: <a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="divider"><hr></div>            
-    @endforeach
     <br>
     {{ $news->links() }}    
 

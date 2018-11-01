@@ -42,10 +42,10 @@ class NewsController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => [
-            'all'
+            "all", "show_slug"
         ]]);
 
-        $this->paginator = env('PAGINATOR', 20);
+        $this->paginator = env('PAGINATOR', 30);
     }
 
     /**
@@ -151,11 +151,23 @@ class NewsController extends Controller
             Session::flash('error', 'You do not have authorization for this action.');
             return redirect()->back();
         }
-
         $newz = News::findOrFail($id);
-
-        return view('news.show')->with('newz', $newz);        
+        return view('news.show')
+            ->with('newz', $newz);        
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  String  $slug
+     * @return \Illuminate\Http\Response
+     */    
+    public function show_slug($slug)
+    {     
+        $newz = News::where('slug', $slug)->first();
+        return view('news.show_slug')
+            ->with('newz', $newz);        
+    }    
 
     /**
      * Show the form for editing the specified resource.
