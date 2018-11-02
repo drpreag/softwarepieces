@@ -8,9 +8,9 @@
   
   <body>
 
-    @include('partials._nav')   
-
     <div class="container-fluid"> <!-- start of body .container -->   
+
+      @include('partials._nav')   
 
       @include('partials._messages')
 

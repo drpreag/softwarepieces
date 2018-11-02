@@ -17,7 +17,7 @@
 
     <br>
     @foreach ($posts as $post)
-        <div class="gtco-container divider">
+        <div class="main-container">
 
             <div>
                 <div class="row">
@@ -46,7 +46,9 @@
                 Published by: <a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a> @ <b>{{ substr($post->created_at,0,10) }}</b>
             </div>
         </div>
-        <div class="divider"><hr></div>
+        <div class="divider">
+            <hr>
+        </div>
     @endforeach
     <br>
     {{ $posts->links() }}    
@@ -55,9 +57,9 @@
 
 @section('scripts')
 <script type="text/javascript">
-function submitform()
-{
-  this.form.submit();
-}
+    function submitform()
+    {
+      this.form.submit();
+    }
 </script>
 @endsection

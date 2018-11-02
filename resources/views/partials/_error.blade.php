@@ -8,7 +8,7 @@
   
   <body>
 
-    <div class="container"> <!-- start of body .container --> 
+    <div class="container-fluid"> <!-- start of body .container --> 
       
       @yield('content')
 

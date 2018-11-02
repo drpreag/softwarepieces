@@ -10,6 +10,7 @@
 *   Template Style 
 *
 * ======================================================= */
+
 body {
   padding-top: 70px;
   font-family: "Work Sans", Arial, sans-serif;
@@ -25,7 +26,7 @@ body {
     right: 0;
     left: 0;
     z-index: 1030;
-    background-color: white;
+    background-color: #F4F6F6;
 }
 
 /* set a max-width for horizontal fluid layout and make it centered */
@@ -35,8 +36,58 @@ body {
   max-width: 1200px; /* or 950px */
 }
 
+.main-container {
+  max-width: 1100px;
+  position: relative;
+  margin: auto;
+}
+
 .navbar-bg-color {
     background-color: dark;
+}
+
+.post-body {
+    font-size: 14px;
+    height: auto;
+    min-height: 250px;
+    text-align: left;
+}
+
+.post-creator {
+    font-size: 12px;
+    height: auto;
+    min-height: 200px;
+    text-align: left;     
+}
+
+.post-advertise {
+    font-size: 14px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.post-img{
+    max-height:400px;
+    max-width:200px;
+    height:auto;
+    width:auto;
+    float: right; 
+    margin: 15px 0px 15px 15px ; 
+    border: 1px solid #000000;
+}
+
+.divider {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.error-container {
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+    min-height: 600px;
 }
 
 #page {
@@ -48,6 +99,7 @@ body {
   -o-transition: 0.5s;
   transition: 0.5s;
 }
+
 .offcanvas #page {
   overflow: hidden;
   position: absolute;
@@ -86,7 +138,7 @@ h1, h2, h3, h4, h5, h6, figure {
   color: #000;
   font-family: "Work Sans", Arial, sans-serif;
   font-weight: 400;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 }
 
 ::-webkit-selection {
@@ -104,7 +156,7 @@ h1, h2, h3, h4, h5, h6, figure {
   background: #52d3aa;
 }
 
-.gtco-container {
+.delete_gtco-container {
   max-width: 1140px;
   position: relative;
   margin: 0 auto;
@@ -112,7 +164,7 @@ h1, h2, h3, h4, h5, h6, figure {
   padding-right: 15px;
 }
 
-.gtco-nav {
+.delete_gtco-nav {
   position: absolute;
   top: 0;
   margin: 0;
@@ -127,14 +179,14 @@ h1, h2, h3, h4, h5, h6, figure {
   }
 }
 
-.gtco-nav #gtco-logo {
+.delete_gtco-nav #gtco-logo {
   font-size: 20px;
   margin: 0;
   padding: 0;
   text-transform: uppercase;
   font-weight: bold;
 }
-.gtco-nav a {
+.delete_gtco-nav a {
   padding: 5px 10px;
   color: #fff;
 }
@@ -1459,42 +1511,4 @@ form label {
 .thead-inverse th {
   color: #fff;
   background-color: #A9A9A9;
-}
-
-#responsive-image {  
-  width: 100%;  height: auto; 
-}
-
-.post-body {
-    font-size: 14px;
-    height: auto;
-    min-height: 200px;
-    text-align: left;
-}
-
-.post-creator {
-    font-size: 12px;
-    height: auto;
-    min-height: 200px;
-    text-align: left;     
-}
-
-.post-advertise {
-    font-size: 14px;
-    min-height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-}
-
-.divider {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-}
-
-.error-container {
-  display: flex;
-  align-items: center;  
-  justify-content: center;
-    min-height: 600px;
 }

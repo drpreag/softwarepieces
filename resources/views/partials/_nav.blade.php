@@ -1,5 +1,5 @@
 
-  <nav class="navbar navbar-expand-md navbar-dark container-fluid navbar-bg-color fixed-top">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top">
 
     <a class="navbar-brand" href="/dashboard">
       <img src="/img/logo.png" width="111" height="40" alt="SoftwarePieces">

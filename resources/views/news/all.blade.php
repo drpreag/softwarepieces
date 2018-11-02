@@ -16,14 +16,13 @@
     </div> 
 
     <br>
-    @foreach ($news as $newz)
-        <div class="gtco-container divider">
-
+    <div class="main-container">    
+        @foreach ($news as $newz)
             <div class="post-body">
                 <br>
-                <h3><b>{{ $newz->title }}</b></h3>
+                <h4><b>{{ $newz->title }}</b></h4>
                 @if (! empty($newz->imgurl))
-                    <img src="{{ $newz->imgurl }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" width="400px" target="_blank">
+                    <img src="{{ $newz->imgurl }}" class="post-img" target="_blank">
                 @endif
                 {!! $newz->post !!}
                 Read more <a href="{{ $newz->url }}" target="_blank">here...</a>
@@ -34,24 +33,25 @@
                     </div>
                 @endif
                 <div>
-                    Shared by: <a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
+                    Shared by: <a href="{{ route('profiles.show', $newz->creator) }}">
+                    <b>{{ $newz->isCreator->name }}</b></a> @ <b>{{ $newz->created_at }}</b>
                 </div>
             </div>
 
-        </div>
-
-        <div class="divider"><hr></div>            
-    @endforeach
+            <div class="divider">
+                <hr>
+            </div>
+        @endforeach
+    </div>
     <br>
-    {{ $news->links() }}    
 
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
-function submitform()
-{
-  this.form.submit();
-}
+    function submitform()
+    {
+      this.form.submit();
+    }
 </script>
 @endsection
