@@ -14,7 +14,7 @@
                         <img src="{{ $newz->imgurl }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" width="200px" target="_blank">
                     @endif
                     {!! substr(strip_tags($newz->post), 0, 150) !!}
-                    <br>
+                    <br><br>
                     Read more <a href="{{ route('news.show_slug', [$newz->slug]) }}">here...</a>
                     <br>
                     @if (! empty($newz->inCategory->name))

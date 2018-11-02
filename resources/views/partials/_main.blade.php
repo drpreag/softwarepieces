@@ -8,17 +8,17 @@
   
   <body>
 
-    @include('partials._nav')    
+    @include('partials._nav')   
 
-    <div class="container-fluid"> <!-- start of body .container --> 
-      
+    <div class="container-fluid"> <!-- start of body .container -->   
+
       @include('partials._messages')
 
       @yield('content')
 
     </div> <!-- end of body .container --> 
 
-      @include('partials._footer')
+    @include('partials._footer')
 
   </body>
 </html>
