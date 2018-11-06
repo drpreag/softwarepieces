@@ -39,7 +39,7 @@
                     <img src="{{ asset('images/' . $post->image) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" target="_blank" max-height="240px" max-width="300px" align="right">
                 @endif
                 {!! substr($post->body, 0, 768) !!}...<br><br>
-                Read more <a href="{{ route('blog.show_blog', $post->id) }}">here...</a>
+                Read more <a href="{{ route('blog.show_blog', $post->slug) }}">here...</a>
             </div>
 
             <div>

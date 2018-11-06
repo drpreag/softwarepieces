@@ -42,7 +42,7 @@ class NewsController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => [
-            "all", "show_slug"
+            "all", "show_news"
         ]]);
 
         $this->paginator = env('PAGINATOR', 30);
@@ -162,15 +162,12 @@ class NewsController extends Controller
      * @param  String  $slug
      * @return \Illuminate\Http\Response
      */    
-    public function show_slug($slug)
+    public function show_news($slug)
     {
         $slugNewz = News::where('slug', $slug)->first();
 
-        $prev = null;
-        $foundPrev = false;
-        $current = null;
-        $next = null;
-        $foundNext = false;        
+        $previousSlug = null;
+        $nextSlug = null;
 
         $news = News::where('active', true)
             ->where('approved', true)
@@ -180,7 +177,7 @@ class NewsController extends Controller
             ->first();
 
         if ($news)
-            $prev = $news->slug;
+            $previousSlug = $news->slug;
 
         $news = News::where('active', true)
             ->where('approved', true)
@@ -189,12 +186,12 @@ class NewsController extends Controller
             ->orderBy('id', 'desc')
             ->first();
         if ($news)
-            $next = $news->slug;
+            $nextSlug = $news->slug;
 
-        return view('news.show_slug')
+        return view('news.show_news')
             ->with('slugNewz', $slugNewz)
-            ->with('previousSlug', $prev)
-            ->with('nextSlug', $next);
+            ->with('previousSlug', $previousSlug)
+            ->with('nextSlug', $nextSlug);
 
     }    
 
@@ -327,12 +324,23 @@ class NewsController extends Controller
     {
         $category = $request->category;
 
-        $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
+        $newsCategory = Category::where('active',true)
+                        ->orderBy('name')
+                        ->pluck('name', 'id');
 
         if (is_null($category)) {   
-            $news = News::where('active', true)->where('approved', true)->orderBy('id', 'desc')->paginate($this->paginator);
+            $news = News::where('active', true)
+                    ->where('approved', true)
+                    ->whereNotNull('slug')
+                    ->orderBy('id', 'desc')
+                    ->paginate($this->paginator);
         } else {
-            $news = News::where('active', true)->where('approved', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
+            $news = News::where('active', true)
+                    ->where('approved', true)
+                    ->whereNotNull('slug')
+                    ->where('category', $category)
+                    ->orderBy('id', 'desc')
+                    ->paginate($this->paginator);
         }
 
         return view ('news.all')

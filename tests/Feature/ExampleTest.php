@@ -20,16 +20,26 @@ class ExampleTest extends TestCase
         $response->assertSee('Login');
         $response->assertSee('Register');
 
+        $response = $this->get('/dashboard');
+        $response->assertStatus(200);
+
         $response = $this->get('/news');
         $response->assertStatus(302);
 
         $response = $this->get('/news/all');
         $response->assertStatus(200);
 
+        $response = $this->get('/news/slug/lorem-ipsum');
+        $response->assertStatus(200);
+        $response->assertSee('WTF is Lorem Ipsum?');
+
         $response = $this->get('/blog');
         $response->assertStatus(302);
 
-        $response = $this->get('/blog/1/show_blog');
+        $response = $this->get('/blog/all');
+        $response->assertStatus(200);
+
+        $response = $this->get('/blog/slug/lorem-ipsum');
         $response->assertStatus(200);
         $response->assertSee('WTF is Lorem Ipsum?');
     }

@@ -287,9 +287,18 @@ class BlogController extends Controller
         $newsCategory = Category::where('active',true)->orderBy('name')->pluck('name', 'id');
 
         if (is_null($category)) {   
-            $posts = Blog::where('active', true)->where('approved', true)->orderBy('id', 'desc')->paginate($this->paginator);
+            $posts = Blog::where('active', true)
+                ->where('approved', true)
+                ->whereNotNull('slug')
+                ->orderBy('id', 'desc')
+                ->paginate($this->paginator);
         } else {
-           $posts = Blog::where('active', true)->where('approved', true)->where('category', $category)->orderBy('id', 'desc')->paginate($this->paginator);
+           $posts = Blog::where('active', true)
+                ->where('approved', true)
+                ->whereNotNull('slug')                
+                ->where('category', $category)
+                ->orderBy('id', 'desc')
+                ->paginate($this->paginator);
         }
 
         return view ('blog.all')
@@ -304,9 +313,10 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_blog($id)
+    public function show_blog($slug)
     {
-        $post = Blog::findOrFail($id);
+        // $post = Blog::findOrFail($id);
+        $post = Blog::where('slug', $slug)->first();        
         
         if ($post->active==true and $post->approved==true)
             return view('blog.show_blog')

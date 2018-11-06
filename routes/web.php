@@ -17,8 +17,8 @@ Route::get('dashboard', ['uses' => 'PagesController@getDashboard', 'as' => 'dash
 Route::get('licence', ['uses' => 'PagesController@getLicence', 'as' => 'licence']);
 Route::get('about', ['uses' => 'PagesController@getAbout', 'as' => 'about']);
 Route::get('user_error', ['uses' => 'PagesController@getUserError', 'as' => 'user_error']);
-Route::get ('news/slug/{slug}', ['uses' => 'NewsController@show_slug', 'as' => 'news.show_slug']);
-
+Route::get ('news/slug/{slug}', ['uses' => 'NewsController@show_news', 'as' => 'news.show_news']);
+Route::get ('blog/slug/{slug}', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
 // Auth pages
 Auth::routes();
 Route::get('password/change', ['uses' => 'Auth\ChangePasswordController@showChangePasswordForm', 'as' => 'password.change']);
@@ -44,7 +44,7 @@ Route::resource ('news', 'NewsController' );
 
 Route::get ('blog/{id}/delete', ['uses' => 'BlogController@delete', 'as' => 'blog.delete']);
 Route::get ('blog/all', ['uses' => 'BlogController@all', 'as' => 'blog.all']);
-Route::get ('blog/{id}/show_blog', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
+// Route::get ('blog/{id}/show_blog', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
 Route::get ('blog/{id}/approve', ['uses' => 'BlogController@approve', 'as' => 'blog.approve']);
 Route::get ('blog/{id}/revoke_approve', ['uses' => 'BlogController@revoke_approve', 'as' => 'blog.revoke_approve']);
 Route::resource ('blog', 'BlogController' );

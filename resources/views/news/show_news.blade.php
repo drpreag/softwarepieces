@@ -9,12 +9,12 @@
 			<div class="row">
 				<div class="col" align="left">
 					@if (!empty ($previousSlug))					
-						<a href="{{ route('news.show_slug', $previousSlug) }}"><i class="fas fa-step-backward fa-2x"></i>Previous</a>
+						<a href="{{ route('news.show_news', $previousSlug) }}"><i class="fas fa-step-backward fa-2x"></i> Previous</a>
 					@endif
 				</div>				
 				<div class="col" align="right">
 					@if (!empty ($nextSlug))
-						<a href="{{ route('news.show_slug', $nextSlug) }}">Next <i class="fas fa-step-forward fa-2x"></i></a>
+						<a href="{{ route('news.show_news', $nextSlug) }}">Next <i class="fas fa-step-forward fa-2x"></i></a>
 					@endif
 				</div>
 

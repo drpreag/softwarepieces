@@ -15,7 +15,7 @@
                     @endif
                     {!! substr(strip_tags($newz->post), 0, 150) !!}
                     <br><br>
-                    Read more <a href="{{ route('news.show_slug', [$newz->slug]) }}">here...</a>
+                    Read more <a href="{{ route('news.show_news', [$newz->slug]) }}">here...</a>
                     <br>
                     @if (! empty($newz->inCategory->name))
                         <div>
