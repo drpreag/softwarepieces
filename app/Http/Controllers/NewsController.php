@@ -163,10 +163,39 @@ class NewsController extends Controller
      * @return \Illuminate\Http\Response
      */    
     public function show_slug($slug)
-    {     
-        $newz = News::where('slug', $slug)->first();
+    {
+        $slugNewz = News::where('slug', $slug)->first();
+
+        $prev = null;
+        $foundPrev = false;
+        $current = null;
+        $next = null;
+        $foundNext = false;        
+
+        $news = News::where('active', true)
+            ->where('approved', true)
+            ->where('id', '>', $slugNewz->id)
+            ->whereNotNull('slug')            
+            ->orderBy('id', 'asc')
+            ->first();
+
+        if ($news)
+            $prev = $news->slug;
+
+        $news = News::where('active', true)
+            ->where('approved', true)
+            ->where('id', '<', $slugNewz->id)
+            ->whereNotNull('slug')            
+            ->orderBy('id', 'desc')
+            ->first();
+        if ($news)
+            $next = $news->slug;
+
         return view('news.show_slug')
-            ->with('newz', $newz);        
+            ->with('slugNewz', $slugNewz)
+            ->with('previousSlug', $prev)
+            ->with('nextSlug', $next);
+
     }    
 
     /**
