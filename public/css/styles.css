@@ -59,7 +59,7 @@ body {
 .post-body {
     font-size: 14px;
     height: auto;
-    min-height: 250px;
+    min-height: 290px;
     text-align: left;
 }
 
@@ -79,12 +79,12 @@ body {
 }
 
 .post-img{
-    max-height:400px;
-    max-width:200px;
-    height:auto;
+    max-height:200px;
     width:auto;
+    max-width: 200px;
+    height: auto;
     float: right; 
-    margin: 15px 0px 15px 15px ; 
+    margin: 15px 0px 15px 15px; 
     border: 1px solid #000000;
 }
 

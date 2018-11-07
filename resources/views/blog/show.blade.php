@@ -38,10 +38,9 @@
                 <hr>                    
             @endif
             @if (! empty($post->image))
-                <img src="{{ asset('images/' . $post->image) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="responsive-image" target="_blank" align="right" float="right">
+                <img src="{{ asset('images/' . $post->image) }}" class="post-img">
             @endif      
             {!! $post->body !!}
-            {-- !! htmlentities($post->body) !! --}
         </div>
     </div>
 	@if (1>2)

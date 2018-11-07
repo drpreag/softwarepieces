@@ -1,6 +1,6 @@
 @extends('partials._main')
 
-@section('title', "| $slugNewz->title " )
+@section('title', "| $newz->title " )
 
 @section('content')
 	<div class="main-container">
@@ -22,22 +22,22 @@
 			<br>
 	        <div class="row">
 	            <div class="col-12 col-lg-8">
-					<h3><b>{{ $slugNewz->title }}</b></h3>		
+					<h3><b>{{ $newz->title }}</b></h3>		
 					<div>
-						@if (! empty($slugNewz->imgurl))
-							<img src="{{ $slugNewz->imgurl }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" class="post-img" target="_blank">
+						@if (! empty($newz->imgurl))
+							<img src="{{ $newz->imgurl }}" class="post-img">
 						@endif
-						{!! $slugNewz->post !!}
-						Read original text <a href="{{ $slugNewz->url }}" target="_blank">here</a>
+						{!! $newz->post !!}
+						Read original text <a href="{{ $newz->url }}" target="_blank">here</a>
 					</div>
 				</div>
 
 		        <div class="col-12 col-lg-4" align="right">
 		        	<br>
-	                <p>Category:<br><b>{{ $slugNewz->inCategory->name }}</b></p>
-	                <p>Shared by:<br><a href="{{ route('profiles.show', $slugNewz->creator) }}"><b>{{ $slugNewz->isCreator->name }}</b></a></p>
-	                <p>Published:<br><b>{{ substr($slugNewz->created_at,0,10) }}</b></p>
-	                <p>Slug:<br><b>{{ $slugNewz->slug }}</b><br><br></p>
+	                <p>Category:<br><b>{{ $newz->inCategory->name }}</b></p>
+	                <p>Shared by:<br><a href="{{ route('profiles.show', $newz->creator) }}"><b>{{ $newz->isCreator->name }}</b></a></p>
+	                <p>Published:<br><b>{{ substr($newz->created_at,0,10) }}</b></p>
+	                <p>Slug:<br><b>{{ $newz->slug }}</b><br><br></p>
 				</div>
 			</div>
 		</div>

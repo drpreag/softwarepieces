@@ -17,10 +17,10 @@ Route::get('dashboard', ['uses' => 'PagesController@getDashboard', 'as' => 'dash
 Route::get('licence', ['uses' => 'PagesController@getLicence', 'as' => 'licence']);
 Route::get('about', ['uses' => 'PagesController@getAbout', 'as' => 'about']);
 Route::get('user_error', ['uses' => 'PagesController@getUserError', 'as' => 'user_error']);
-Route::get ('news/slug/{slug}', ['uses' => 'NewsController@show_news', 'as' => 'news.show_news']);
-Route::get ('blog/slug/{slug}', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
-// Auth pages
+
 Auth::routes();
+
+// pages protected by middleware
 Route::get('password/change', ['uses' => 'Auth\ChangePasswordController@showChangePasswordForm', 'as' => 'password.change']);
 Route::post('password/change', ['uses' => 'Auth\ChangePasswordController@change', 'as' => 'password.change']);
 
@@ -40,13 +40,14 @@ Route::get ('news/{id}/delete', ['uses' => 'NewsController@delete', 'as' => 'new
 Route::get ('news/all', ['uses' => 'NewsController@all', 'as' => 'news.all']);
 Route::get ('news/{id}/approve', ['uses' => 'NewsController@approve', 'as' => 'news.approve']);
 Route::get ('news/{id}/revoke_approve', ['uses' => 'NewsController@revoke_approve', 'as' => 'news.revoke_approve']);
+Route::get ('news/slug/{slug}', ['uses' => 'NewsController@show_news', 'as' => 'news.show_news']);
 Route::resource ('news', 'NewsController' );
 
 Route::get ('blog/{id}/delete', ['uses' => 'BlogController@delete', 'as' => 'blog.delete']);
 Route::get ('blog/all', ['uses' => 'BlogController@all', 'as' => 'blog.all']);
-// Route::get ('blog/{id}/show_blog', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
 Route::get ('blog/{id}/approve', ['uses' => 'BlogController@approve', 'as' => 'blog.approve']);
 Route::get ('blog/{id}/revoke_approve', ['uses' => 'BlogController@revoke_approve', 'as' => 'blog.revoke_approve']);
-Route::resource ('blog', 'BlogController' );
+Route::get ('blog/slug/{slug}', ['uses' => 'BlogController@show_blog', 'as' => 'blog.show_blog']);
+Route::resource ('blog', 'BlogController');
 
-Route::resource ('profiles', 'ProfilesController' );
+Route::resource ('profiles', 'ProfilesController');

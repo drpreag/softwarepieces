@@ -9,55 +9,47 @@
 @section('title', '| View Post')
 
 @section('content')
-
-	<div class="gtco-container">
-
-		<div align="right">
-				<a href="{{ URL::previous() }}" class="btn btn-info btn-xs">Back</a>
-		</div>				
-
-        <div>
-            <div class="row">
-                <div class="col-md-6">
-                    Category: <b>{{ $post->inCategory->name }}</b>
-                </div>
-                <div class="col-md-6" align="right">
-                    Published: <b>{{ substr($post->created_at,0,10) }}</b>
-                </div>
-            </div>
-        </div>
-
+    <div class="main-container">
+        <br>        
         <div class="post-body">
-            <br>
-            <h3><b>{{ $post->title }}</b></h3>                  
-            @if (! empty($post->subtitle))
-                <hr>
-                <i>{{ $post->subtitle }}</i>
-                <hr>                    
-            @endif
-            @if (! empty($post->image))
-                <img src="{{ asset('images/' . $post->image) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" target="_blank" max-height="240px" max-width="300px" align="right" float="right">
-            @endif      
-            {!! $post->body !!}
-        </div>
+            <div class="row">
+                <div class="col" align="left">
+                    @if (!empty ($previousSlug))                    
+                        <a href="{{ route('blog.show_blog', $previousSlug) }}"><i class="fas fa-step-backward fa-2x"></i> Previous</a>
+                    @endif
+                </div>              
+                <div class="col" align="right">
+                    @if (!empty ($nextSlug))
+                        <a href="{{ route('blog.show_blog', $nextSlug) }}">Next <i class="fas fa-step-forward fa-2x"></i></a>
+                    @endif
+                </div>
 
-        <div class="row">        
-            <div class="well post-creator col-md-7">
-                Published by: <a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a>     
-                @if (! empty($post->isCreator->avatar))
-                    <img src="{{ asset('images/' . $post->isCreator->avatar) }}" style="float: right; margin: 15px 15px 15px 15px; border:1px solid #000000;" target="_blank" max-height="300px" max-width="200px" >
-                @endif                                 
-                <br><br>
-                <i>{!! $post->isCreator->description !!}</i>
-            </div>  
-            <div class="col-md-1">
-            </div>            
-            <div class="well post-advertise col-md-4">
-                Advertising
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <h3><b>{{ $post->title }}</b></h3>      
+                    <div>
+                        @if (! empty($post->image))
+                            <img src="{{ asset('images/' . $post->image) }}" class="post-img">
+                        @endif
+                        {!! $post->body !!}
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4" align="right">
+                    <br>
+                    <p>Category:<br><b>{{ $post->inCategory->name }}</b></p>
+                    <p>Shared by:<br><a href="{{ route('profiles.show', $post->creator) }}"><b>{{ $post->isCreator->name }}</b></a></p>
+                    <p>Published:<br><b>{{ substr($post->created_at,0,10) }}</b></p>
+                    <p>Slug:<br><b>{{ $post->slug }}</b><br><br></p>
+                </div>
             </div>
         </div>
-
     </div>
+
+
+    <div>
 		@if (1>2)
 		<div id="backend-comments" style="margin-top: 50px;">
 			<h3>Comments <small>{{ $post->comments()->count() }} total</small></h3>

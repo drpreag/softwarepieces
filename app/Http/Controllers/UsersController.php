@@ -198,8 +198,8 @@ class UsersController extends Controller
         $this->validate(
             $request,
             array(
-                'name' => 'required|max:255',
-                'role'    => 'required|integer|min:1|max:9',
+                'name'      => 'required|max:255',
+                'role'      => 'required|integer|min:1|max:9',
                 'active'    => 'required|integer|min:0|max:1',
                 'avatar'    => 'nullable|max:255'
             )

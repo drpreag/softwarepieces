@@ -17,7 +17,8 @@ use App\User;
 use App\Category;
 use Purifier;
 use Session;
-use Image;
+// use Image;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewBlogPost;
 
@@ -61,9 +62,7 @@ class BlogController extends Controller
             Session::flash('error', 'You do not have authorization for this action.');
             return redirect()->back();
         }
-
         $posts = Blog::orderBy('id', 'desc')->paginate($this->paginator);
-
         return view ('blog.index')
             ->with('posts', $posts);
     }
@@ -105,9 +104,9 @@ class BlogController extends Controller
             'subtitle'      => 'max:1024',
             'category'      => 'required|integer',
             'body'          => 'required',
-            'image'         => 'max:255',
             'keywords'      => 'max:127',
-            'slug'          => 'max:127'
+            'slug'          => 'max:127',
+            'image'         => 'max:2048|mimes:jpg,jpeg,bmp,png,gif'
         ));
 
         $post = new Blog;
@@ -118,17 +117,17 @@ class BlogController extends Controller
 
             $filename = time(). '.' . $image->getClientOriginalExtension();
             $location = public_path('images/') . $filename;
-            // max 600x600px for image
-            if ($blogImage->width() > 600) 
-                $blogImage->resize(600, null, function ($constraint) {
+            // max 400x400px for image
+            if ($blogImage->width() > 400) 
+                $blogImage->resize(400, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-            if ($blogImage->height() > 600) 
-                $blogImage->resize(null, 600, function ($constraint) {
+            if ($blogImage->height() > 400) 
+                $blogImage->resize(null, 400, function ($constraint) {
                     $constraint->aspectRatio();
                 });
             $blogImage->save($location);
-            $post->image = $filename;            
+            $post->image = $filename;
         }        
 
         // store in the database
@@ -146,7 +145,6 @@ class BlogController extends Controller
             foreach ($editors as $editor) {
                 Mail::to($editor->email)->queue(new NewBlogPost($editor, $post));
             }
-
             Session::flash('success', 'The blog post was successfully saved!');
             return redirect()->route('blog.show', $post->id);
         } else {
@@ -204,9 +202,18 @@ class BlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {       
+        $post_max_size = (int) filter_var(ini_get('post_max_size'), FILTER_SANITIZE_NUMBER_INT) * 1024 * 1024;
+        // dd ($post_max_size);
+        $content_length = $request->server('HTTP_CONTENT_LENGTH') ?: $request->server('CONTENT_LENGTH') ?: 0;
+
+        if ($content_length > $post_max_size) {
+            Session::flash('error', 'Upload size too big.');
+            return redirect()->back();              
+        }
+
         $post = Blog::findOrFail($id);
-        $post->active = true;
+        // $post->active = true;
 
         if ($post->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
             Session::flash('error', 'You do not have authorization for this action.');
@@ -219,26 +226,28 @@ class BlogController extends Controller
             'subtitle'      => 'max:1024',            
             'category'      => 'required|integer',
             'body'          => 'required',
-            'image'         => 'max:255',
             'keywords'      => 'max:127',
-            'slug'          => 'max:127'
+            'slug'          => 'max:127',
+            'image'         => 'max:2048|mimes:jpg,jpeg,bmp,png,gif'
         ));
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {        
             $image = $request->file('image');
-            $blogImage = Image::make($image);
-
+            $blogImage = Image::make($image->getRealPath());
             $filename = time(). '.' . $image->getClientOriginalExtension();
             $location = public_path('images/') . $filename;
-            // max 600x600px for image
-            if ($blogImage->width() > 600) 
-                $blogImage->resize(600, null, function ($constraint) {
+            // max 400x400px for image
+            if ($blogImage->width() > 400) 
+                $blogImage->resize(400, null, function ($constraint) {
                     $constraint->aspectRatio();
+                    $constraint->upsize();
                 });
-            if ($blogImage->height() > 600) 
-                $blogImage->resize(null, 600, function ($constraint) {
+            if ($blogImage->height() > 400) 
+                $blogImage->resize(null, 400, function ($constraint) {
                     $constraint->aspectRatio();
+                    $constraint->upsize();
                 });
+
             $blogImage->save($location);
             $post->image = $filename;
         }        
@@ -267,7 +276,31 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $post = Blog::findOrFail($id);
+
+        if ($post->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
+            Session::flash('error', 'You do not have authorization for this action.');
+            return redirect()->back();
+        }
+        // update model in the database
+        if (Blog::destroy($id)) {
+            Session::flash('success', 'The blog post was successfully deleted!');
+            return redirect()->route('blog');
+        } else {
+            Session::flash('error', 'An error occured.');
+            return redirect()->back();            
+        }
     }
 
     /**
@@ -315,12 +348,36 @@ class BlogController extends Controller
      */
     public function show_blog($slug)
     {
-        // $post = Blog::findOrFail($id);
-        $post = Blog::where('slug', $slug)->first();        
-        
-        if ($post->active==true and $post->approved==true)
-            return view('blog.show_blog')
-                    ->with('post',$post);
+        $post = Blog::where('slug', $slug)
+            ->where('active', true)
+            ->where('approved', true)
+            ->first();
+
+        $previousSlug = null;
+        $nextSlug = null;
+
+        $prevNextBlog = Blog::where('active', true)
+            ->where('approved', true)
+            ->where('id', '>', $post->id)
+            ->whereNotNull('slug')            
+            ->orderBy('id', 'asc')
+            ->first();
+        if ($prevNextBlog)
+            $previousSlug = $prevNextBlog->slug;
+
+        $prevNextBlog = Blog::where('active', true)
+            ->where('approved', true)
+            ->where('id', '<', $post->id)
+            ->whereNotNull('slug')            
+            ->orderBy('id', 'desc')
+            ->first();
+        if ($prevNextBlog)
+            $nextSlug = $prevNextBlog->slug;
+
+        return view('blog.show_blog')
+            ->with('post', $post)
+            ->with('previousSlug', $previousSlug)
+            ->with('nextSlug', $nextSlug);
     }
 
     /**

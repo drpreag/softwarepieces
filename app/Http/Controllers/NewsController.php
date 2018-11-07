@@ -164,35 +164,34 @@ class NewsController extends Controller
      */    
     public function show_news($slug)
     {
-        $slugNewz = News::where('slug', $slug)->first();
+        $newz = News::where('slug', $slug)->first();
 
         $previousSlug = null;
         $nextSlug = null;
 
-        $news = News::where('active', true)
+        $prevNextNews = News::where('active', true)
             ->where('approved', true)
-            ->where('id', '>', $slugNewz->id)
+            ->where('id', '>', $newz->id)
             ->whereNotNull('slug')            
             ->orderBy('id', 'asc')
             ->first();
 
-        if ($news)
-            $previousSlug = $news->slug;
+        if ($prevNextNews)
+            $previousSlug = $prevNextNews->slug;
 
-        $news = News::where('active', true)
+        $prevNextNews = News::where('active', true)
             ->where('approved', true)
-            ->where('id', '<', $slugNewz->id)
+            ->where('id', '<', $newz->id)
             ->whereNotNull('slug')            
             ->orderBy('id', 'desc')
             ->first();
-        if ($news)
-            $nextSlug = $news->slug;
+        if ($prevNextNews)
+            $nextSlug = $prevNextNews->slug;
 
         return view('news.show_news')
-            ->with('slugNewz', $slugNewz)
+            ->with('newz', $newz)
             ->with('previousSlug', $previousSlug)
             ->with('nextSlug', $nextSlug);
-
     }    
 
     /**
@@ -281,7 +280,7 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 
     /**
@@ -298,12 +297,12 @@ class NewsController extends Controller
             Session::flash('error', 'You do not have authorization for this news.');
             return redirect()->route('news.index');
         }
-        $news->exists=true;
+        $news->exists = true;
         $news->active = false;
 
         if ($news->save()) {
             Session::flash('success', 'A News was sucessfully made inactive');
-            return redirect()->route('news.index');
+            return redirect()->route('news');
         } else {
             Session::flash('error', 'An error occured.');
             return redirect()->back();

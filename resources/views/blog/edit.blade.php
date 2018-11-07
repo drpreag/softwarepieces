@@ -18,13 +18,20 @@
 				{{ Form::select('category', $blogCategories, null, array('class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose one...')) }}
 				
 				{{ Form::label('body', "Body:") }}
-				{{ Form::textarea('body', null, array('class' => 'form-control', 'readonly'=>'readonly')) }}
+				{{ Form::textarea('body', null, array('class' => 'form-control')) }}
 				<br>
-	        	@if (! empty($post->image))
-	                <img src="{{ asset('images/' . $post->image) }}" max-height="600px" max-width="600px"><br>
-				@endif
-				{{ Form::label('image', 'You can change a Featured Image') }}
-				{{ Form::file('image') }}
+				<div class="row">
+					<div class="col" align="left">
+						{{ Form::label('image', 'You can change a Featured Image') }}<br>
+						{{ Form::file('image') }}<br>
+						<p>file size limit is 2MB</p>
+					</div>
+					<div class="col" align="right">
+				       	@if (! empty($post->image))
+	    		            <img src="{{ asset('images/' . $post->image) }}" class="post-img">
+						@endif
+					</div>				
+				</div>
 
 				{{ Form::label('keywords', 'Keywords: (coma delimited)') }}
 				{{ Form::text('keywords', null, array('class' => 'form-control', 'maxlength' => '255')) }}

@@ -23,9 +23,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
+        // added by drPreag
+        // every {id} in route parameters must be numeric
+        Route::pattern('id', '[0-9]+');
         parent::boot();
+
     }
 
     /**
