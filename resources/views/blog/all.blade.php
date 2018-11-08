@@ -8,10 +8,9 @@
         <div class="col-12 col-lg-8">
             @foreach ($posts as $post)
                 <div class="post-body">
-                    <br>
                     <h3><b>{{ $post->title }}</b></h3>
                     @if (! empty($post->image))
-                        <img src="{{ asset('images/' . $post->image) }}" style="float: right; margin: 15px 0px 15px 15px; border:1px solid #000000;" class="post-img" target="_blank" align="right">
+                        <img src="{{ asset('images/' . $post->image) }}" class="post-img" target="_blank" align="right">
                     @endif
                     {!! substr(strip_tags($post->body), 0, 150) !!}
                     <br><br>

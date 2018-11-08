@@ -244,7 +244,7 @@ class NewsController extends Controller
             $request,
             array(
                 'url'       => 'required|min:5|max:255',
-                'slug'      => 'required|alpha_dash|min:5|max:255|unique:news',
+                'slug'      => 'required|alpha_dash|min:5|max:255|unique:news,id,:'.$newz->id,
                 'title'     => 'required|min:5|max:128',
                 'imgurl'    => 'max:255',
                 'post'      => 'required|min:10|max:2048',

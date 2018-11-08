@@ -105,7 +105,7 @@ class BlogController extends Controller
             'category'      => 'required|integer',
             'body'          => 'required',
             'keywords'      => 'max:127',
-            'slug'          => 'max:127',
+            'slug'          => 'required|alpha_dash|min:5|max:127|unique:posts',
             'image'         => 'max:2048|mimes:jpg,jpeg,bmp,png,gif'
         ));
 
@@ -204,7 +204,6 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {       
         $post_max_size = (int) filter_var(ini_get('post_max_size'), FILTER_SANITIZE_NUMBER_INT) * 1024 * 1024;
-        // dd ($post_max_size);
         $content_length = $request->server('HTTP_CONTENT_LENGTH') ?: $request->server('CONTENT_LENGTH') ?: 0;
 
         if ($content_length > $post_max_size) {
@@ -213,7 +212,6 @@ class BlogController extends Controller
         }
 
         $post = Blog::findOrFail($id);
-        // $post->active = true;
 
         if ($post->creator <> Auth::user()->id or Auth::user()->role < $this->minAuthWrite) {
             Session::flash('error', 'You do not have authorization for this action.');
@@ -227,7 +225,7 @@ class BlogController extends Controller
             'category'      => 'required|integer',
             'body'          => 'required',
             'keywords'      => 'max:127',
-            'slug'          => 'max:127',
+            'slug'          => 'required|alpha_dash|min:5|max:127|unique:posts,id,:'.$post->id,
             'image'         => 'max:2048|mimes:jpg,jpeg,bmp,png,gif'
         ));
 

@@ -56,11 +56,13 @@
 				<dd>{{ $newz->slug }}</dd>
 			</dl>			
 			@if (! empty($newz->imgurl))
+			<div>
 				<dl class="dl-horizontal">
+					<img src="{{ $newz->imgurl }}" class="post-img" target="_blank">
 					<dt>ImgUrl:</dt>
 					<dd>{{ $newz->imgurl }}</dd>
-					<dd><img src="{{ $newz->imgurl }}" class="responsive-image" target="_blank" width="500px"></dd>
 				</dl>
+			</div>
 			@endif		
 			<dl class="dl-horizontal">
 				<dt>Post:</dt>
