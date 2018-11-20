@@ -8,6 +8,7 @@
         <div class="col-12 col-lg-8">
             @foreach ($posts as $post)
                 <div class="post-body">
+                    <br>
                     <h3><b>{{ $post->title }}</b></h3>
                     @if (! empty($post->image))
                         <img src="{{ asset('images/' . $post->image) }}" class="post-img" target="_blank" align="right">

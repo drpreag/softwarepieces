@@ -8,6 +8,7 @@
         <div class="col-12 col-lg-8">
             @foreach ($news as $newz)
                 <div class="post-body">
+                    <br>
                     <h3><b>{{ $newz->title }}</b></h3>
                     @if (! empty($newz->imgurl))
                         <img src="{{ $newz->imgurl }}" class="post-img" target="_blank">
